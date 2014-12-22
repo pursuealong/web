@@ -18,6 +18,7 @@ app.set('view engine', 'jade');
 
 // REST API
 app.get('/', handler.index);
+app.get('/geo/:lat/:lng', handler.geo);
 
 // Server
 var server = http.listen(3000, function() {
