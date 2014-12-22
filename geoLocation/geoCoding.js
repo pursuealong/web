@@ -1,6 +1,7 @@
 var request = require('request');
 var fs = require('fs');
 
+// Put your api key in "apiKey" file
 var apiKey = fs.readFileSync('./apiKey');
 
 module.exports = {
