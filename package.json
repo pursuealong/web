@@ -1,0 +1,10 @@
+{
+  "name": "pursueAlong",
+  "description": "GeoLocation Social App",
+  "dependencies": {
+    "underscore": "*",
+    "path": "*",
+    "express": "*",
+    "body-parser": "*"
+  }
+}
