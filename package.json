@@ -5,6 +5,7 @@
     "underscore": "*",
     "path": "*",
     "express": "*",
-    "body-parser": "*"
+    "body-parser": "*",
+    "jade": "*"
   }
 }
