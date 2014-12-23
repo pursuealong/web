@@ -5,9 +5,9 @@ function getLocation() {
       navigator.geolocation.getCurrentPosition(storePosition);
   }
 }
-function showPosition(position) {
-  var lat = position.coords.latitude;
-  var lng = position.coords.longitude;
+function showPosition(pos) {
+  var lat = pos.coords.latitude;
+  var lng = pos.coords.longitude;
   var latlon = lat + "," + lng; 
   $.ajax({
     type: 'GET',
@@ -23,8 +23,8 @@ function showPosition(position) {
 }
 
 function storePosition(pos) {
-  var lat = position.coords.latitude;
-  var lng = position.coords.longitude;
+  var lat = pos.coords.latitude;
+  var lng = pos.coords.longitude;
   var latlon = lat + "," + lng;
     // put latlon into a server 
 }
