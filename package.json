@@ -17,6 +17,7 @@
     "bcrypt-nodejs" : "latest",
     "connect-redis": "*",
     "redis": "*",
-    "mongoose": "*"
+    "mongoose": "*",
+    "ejs": "*"
   }
 }
