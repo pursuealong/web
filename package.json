@@ -7,6 +7,16 @@
     "express": "*",
     "body-parser": "*",
     "jade": "*",
-    "request": "*"
+    "request": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "passport-facebook" : "*",
+    "passport-twitter" : "*", 
+    "passport-google-oauth" : "*",
+    "connect-flash" : "*",  
+    "bcrypt-nodejs" : "latest",
+    "connect-redis": "*",
+    "redis": "*",
+    "mongoose": "*"
   }
 }
