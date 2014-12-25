@@ -56,7 +56,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 //app.get('/geo/:lat/:lng', handler.geo);
 
 // load our routes for work routes file
-require('./models/routes')(app, passport); // load our routes and pass in our app and fully configured passport
+require('./controller/main_controller.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 // Server
 var server = http.listen(3000, function() {
