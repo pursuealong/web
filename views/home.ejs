@@ -24,7 +24,7 @@
   <!--
   put user specified newsfeed/page here.
   -->
-  <h1>Hi <%= user.local.email %>, you are logged in.</h1>
+  <h3>Hi <%= user.local.first_name %>, you are logged in.</h3>
   <div class ="container">
     <div class="col-md-4">
       Logo
@@ -33,7 +33,7 @@
       blank
     </div>
     <div class="col-md-4">
-      settings and user info
+      <h5><%= user.local.first_name %> <%= user.local.last_name %></h3>
     </div>
   <% } %>
 </body>

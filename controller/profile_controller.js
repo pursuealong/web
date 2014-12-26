@@ -1,10 +1,13 @@
+var utils = require('../utils/user_data');
 module.exports = function(app, passport) {
 
   // select profile
   app.get('/profile', isLoggedIn, function(req, res) {
-    res.render('user_profile.ejs', {
-      user : req.user
-    });
+    utils.getUser(req.user.local.email, function (err, user) { 
+      res.render('user_profile.ejs', {
+        user : user
+      });
+    }); 
   });
 
   // unlink account
