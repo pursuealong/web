@@ -82,7 +82,7 @@ module.exports = function(passport) {
           newUser.local.password = newUser.generateHash(password);
           newUser.local.first_name = req.body.first_name;
           newUser.local.last_name = req.body.last_name;
-          user.local.gender = req.body.gender;
+          newUser.local.gender = req.body.gender;
           newUser.save(function(err) {
             if (err)
               throw err;

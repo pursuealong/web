@@ -18,6 +18,9 @@
     "connect-redis": "*",
     "redis": "*",
     "mongoose": "*",
-    "ejs": "*"
+    "morgan": "*",
+    "ejs": "*",
+    "cookie-parser": "*", 
+    "express-session": "*"
   }
 }
