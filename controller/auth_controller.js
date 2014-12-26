@@ -5,13 +5,6 @@ module.exports = function(app, passport) {
     });
   });
 
-  // select profile
-  app.get('/profile', isLoggedIn, function(req, res) {
-    res.render('user_profile.ejs', {
-      user : req.user
-    });
-  });
-
   // logout
   app.get('/logout', function(req, res) {
     req.logout();
@@ -28,19 +21,6 @@ module.exports = function(app, passport) {
   app.post('/login', passport.authenticate('local-login', {
     successRedirect : '/profile', // redirect to the secure profile section
     failureRedirect : '/login', // redirect back to the signup page if there is an error
-    failureFlash : true // allow flash messages
-  }));
-
-  // registration
-  // show the signup form
-  app.get('/register', function(req, res) {
-    res.render('user_registration.ejs', { message: req.flash('loginMessage') });
-  });
-
-  // process the signup form
-  app.post('/register', passport.authenticate('local-signup', {
-    successRedirect : '/profile', // redirect to the secure profile section
-    failureRedirect : '/register', // redirect back to the signup page if there is an error
     failureFlash : true // allow flash messages
   }));
 
@@ -118,51 +98,4 @@ module.exports = function(app, passport) {
       failureRedirect : '/'
     }));
 
-  // unlink account
-  /* used to unlink accounts. for social accounts, just remove the token
-  for local account, remove email and password */
-
-  // local login
-  app.get('/unlink/local', function(req, res) {
-    var user = req.user;
-    user.local.email    = undefined;
-    user.local.password = undefined;
-    user.save(function(err) {
-      res.redirect('/profile');
-    });
-  });
-
-  // facebook
-  app.get('/unlink/facebook', function(req, res) {
-    var user = req.user;
-    user.facebook.token = undefined;
-    user.save(function(err) {
-      res.redirect('/profile');
-    });
-  });
-
-  // twitter
-  app.get('/unlink/twitter', function(req, res) {
-    var user = req.user;
-    user.twitter.token = undefined;
-    user.save(function(err) {
-      res.redirect('/profile');
-    });
-  });
-
-  // google
-  app.get('/unlink/google', function(req, res) {
-    var user = req.user;
-    user.google.token = undefined;
-    user.save(function(err) {
-      res.redirect('/profile');
-    });
-  });
 };
-
-// route middleware to ensure user is logged in
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated())
-    return next();
-  res.redirect('/');
-}
