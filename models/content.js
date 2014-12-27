@@ -12,7 +12,7 @@ var schema = mongoose.Schema({
     timestamp  : String,
     coordiante : Object,
     upvote     : Number,
-    comments   : Array,
+    comments   : Object,
     views      : Number,
     priority   : Number
   }
