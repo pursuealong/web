@@ -23,6 +23,7 @@ var schema = mongoose.Schema({
     gender    : String,
     first_name: String,
     last_name : String,
+    username  : String,
     profile_photo : String,
     interests : [String]
   }

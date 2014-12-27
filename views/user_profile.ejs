@@ -27,7 +27,11 @@
           <p>
             <strong>id</strong>: <%= user._id %><br>
             <strong>email</strong>: <%= user.local.email %><br>
-            <strong>password</strong>: <%= user.local.password %>
+            <strong>first name</strong>: <%= user.local.first_name %>
+            <strong>last name</strong>: <%= user.local.last_name %>
+            <strong>username</strong>: <%= user.local.username %>
+            <strong>gender</strong>: <%= user.local.gender %>
+            <strong>interests</strong>: <%= user.local.interests %>
           </p>
           
           <a href="/unlink/local" class="btn btn-default">Unlink</a>
@@ -49,7 +53,10 @@
               <strong>id</strong>: <%= user.facebook.id %><br>
               <strong>token</strong>: <%= user.facebook.token %><br>
               <strong>email</strong>: <%= user.facebook.email %><br>
-              <strong>name</strong>: <%= user.facebook.name %><br>
+              <strong>first name</strong>: <%= user.facebook.first_name %><br>
+              <strong>last name</strong>: <%= user.facebook.last_name %><br>
+              <strong>gender</strong>: <%= user.facebook.gender %><br>
+              <strong>interests</strong>: <%= user.facebook.interests %><br>
             </p>
 
             <a href="/unlink/facebook" class="btn btn-primary">Unlink</a>

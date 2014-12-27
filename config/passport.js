@@ -69,6 +69,8 @@ module.exports = function(passport) {
           user.local.first_name = req.body.first_name;
           user.local.last_name = req.body.last_name;
           user.local.gender = req.body.gender;
+          user.local.username = req.body.username;
+          user.local.interests = req.body.interests;
           user.save(function(err) {
             if (err)
               throw err;
@@ -83,6 +85,8 @@ module.exports = function(passport) {
           newUser.local.first_name = req.body.first_name;
           newUser.local.last_name = req.body.last_name;
           newUser.local.gender = req.body.gender;
+          newUser.local.username = req.body.username;
+          newUser.local.interests = req.body.interests;
           newUser.save(function(err) {
             if (err)
               throw err;
@@ -117,7 +121,8 @@ module.exports = function(passport) {
               user.facebook.last_name = profile.name.familyName;
               user.facebook.email = profile.emails[0].value;
               user.facebook.gender = profile.gender;
-              user.facebook.interests = profile.user_interests;
+              user.facebook.username = req.body.username;
+              //user.facebook.interests = profile.user_interests;
               user.save(function(err) {
               if (err)
                 throw err;
@@ -133,7 +138,8 @@ module.exports = function(passport) {
             newUser.facebook.last_name = profile.name.familyName;
             newUser.facebook.email = profile.emails[0].value;
             newUser.facebook.gender = profile.gender;
-            newUser.facebook.interests = profile.user_interests;
+            newUser.facebook.username = req.body.username;
+            //newUser.facebook.interests = profile.user_interests;
             newUser.save(function(err) {
               if (err)
                 throw err;
@@ -144,12 +150,13 @@ module.exports = function(passport) {
         } else {
           // user already exists and is logged in, we have to link accounts
           var user = req.user; 
-          newUser.facebook.token = token;
-          newUser.facebook.first_name  = profile.name.givenName;
-          newUser.facebook.last_name = profile.name.familyName;
-          newUser.facebook.email = profile.emails[0].value;
-          newUser.facebook.gender = profile.gender;
-          newUser.facebook.interests = profile.user_interests;
+          user.facebook.token = token;
+          user.facebook.first_name  = profile.name.givenName;
+          user.facebook.last_name = profile.name.familyName;
+          user.facebook.email = profile.emails[0].value;
+          user.facebook.gender = profile.gender;
+          user.facebook.username = req.body.username;
+          //user.facebook.interests = profile.user_interests;
           user.save(function(err) {
             if (err)
               throw err;
