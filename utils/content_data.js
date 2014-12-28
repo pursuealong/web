@@ -1,5 +1,4 @@
 var Content = require('../models/content');
-var _ = require('underscore');
 
 module.exports = {
 
@@ -9,10 +8,10 @@ module.exports = {
       var sorted = [];
       var len = contents.length;
       // TODO: optimization perhaps?
-      for (var i = 0; i < len; i++)
+      for (var i = 0; i < len; i++) {
         if (isWithinRadius(radius, center, contents[i]))
-          sorted.push(checkFriend(user, content[i]));
-       });
+          sorted.push(content[i].setMask(user));
+      }
       if (err) return cb(err);
       else return cb(err, sorted);
     });
@@ -60,16 +59,4 @@ function isWithinRadius(radius, center, content) {
   distance = Math.acos(distance) * 6370981.162;
   if (distance <= radius) return true;
   else return false;
-}
-
-/* Assume that author field of content in DB
-   is set to real name. Change the field to
-   'anonymous' if user is not friend with
-   author of the content. */
-function checkFriend(user, content) {
-  if (_.contains(user.friends, content.local.author))
-    return content;
-  else
-    content.local.author = 'anonymous';
-    return content;
 }

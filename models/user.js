@@ -15,7 +15,8 @@ var schema = mongoose.Schema({
     username      : String,
     profile_photo : String,
     interests     : [String],
-    friends       : [String] 
+    friends       : [String],
+    upvoted       : [String]
   },
 
   facebook   : {
@@ -28,7 +29,8 @@ var schema = mongoose.Schema({
     username      : String,
     profile_photo : String,
     interests     : [String],
-    friends       : [String]
+    friends       : [String],
+    upvoted       : [String]
   }
 });
 
