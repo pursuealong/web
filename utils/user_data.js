@@ -9,7 +9,7 @@ module.exports = {
       if (err) return cb(err);
       else return cb(err, user);
     });
-  }
+  },
 
   /* post a content */
   postContent: function(req, author, cb) {
@@ -29,7 +29,7 @@ module.exports = {
           throw err;
         return cb(null, content);
       });
-    }
+    });
   }
 
 }
