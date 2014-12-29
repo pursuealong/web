@@ -1,12 +1,14 @@
 /* MongoDB User model */
 
 var mongoose = require('mongoose');
+var crypto = require('crypto');
 var bcrypt   = require('bcrypt-nodejs');
 
 //TODO: Add more on current schema
 var schema = mongoose.Schema({
 
   local      : {
+    online        : Boolean,
     email         : String,
     password      : String,
     gender        : String,
@@ -16,11 +18,13 @@ var schema = mongoose.Schema({
     profile_photo : String,
     interests     : [String],
     friends       : [String],
-    upvoted       : [String]
+    upvotes_post  : [String], /* [ pid1, pid2, ... ] */
+    upvotes_cmts  : [String] /* [ cid1, cid2, ... ] */
   },
 
   facebook   : {
     id            : String,
+    online        : Boolean,
     token         : String,
     email         : String,
     gender        : String,
@@ -30,9 +34,18 @@ var schema = mongoose.Schema({
     profile_photo : String,
     interests     : [String],
     friends       : [String],
-    upvoted       : [String]
+    upvotes_post  : [String], /* [ pid1, pid2, ... ] */
+    upvotes_cmts  : [String] /* [ cid1, cid2, ... ] */
+
   }
 });
+
+schema.methods.getUser = function() {
+  if (!this.local.token)
+    return this.local;
+  else
+    return this.facebook;
+};
 
 // generating a hash
 schema.methods.generateHash = function(password) {

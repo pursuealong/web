@@ -149,7 +149,7 @@ module.exports = function(passport) {
         });
         } else {
           // user already exists and is logged in, we have to link accounts
-          var user = req.user; 
+          var user = req.user;
           user.facebook.token = token;
           user.facebook.first_name  = profile.name.givenName;
           user.facebook.last_name = profile.name.familyName;

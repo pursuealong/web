@@ -21,6 +21,7 @@
     "morgan": "*",
     "ejs": "*",
     "cookie-parser": "*", 
-    "express-session": "*"
+    "express-session": "*",
+    "crypto": "*"
   }
 }

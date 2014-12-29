@@ -1,36 +1,42 @@
 var Content = require('../models/content');
+var geoCode = require('../geoLocation/geoCoding');
 
 module.exports = {
 
   /* returns list of all contents within radius */
-  getContents: function(radius, center, user, cb) {
+  getContent: function(lat, lng, req, cb) {
     Content.find({}, function (err, contents) {
       var sorted = [];
+      var city = geoCode.doReverseGeo(lat, lng, cb);
       var len = contents.length;
       // TODO: optimization perhaps?
-      for (var i = 0; i < len; i++) {
-        if (isWithinRadius(radius, center, contents[i]))
-          sorted.push(content[i].setMask(user));
-      }
+      (function() {
+        for (var i = 0; i < len; i++) {
+          if (inSameCity(city, contents[i].getCity()))
+            sorted.push(contents[i].setMask(req.user));
+        }
+      })();
       if (err) return cb(err);
       else return cb(err, sorted);
     });
   },
 
   /* post a new content */
-  postContent: function(req, author, cb) {
+  postContent: function(req, cb) {
     // asynchronous
     process.nextTick(function() {
+      var lat = req.body.lat;
+      var lng = req.body.lng;
       var content = new Content();
-      content.local.content = req.body.content;
-      content.local.tag = req.body.tag;
-      content.local.author = author;
-      content.local.timestamp = new Date().getTime();
-      content.local.coordinate = req.body.coordinate;
-      content.local.upvote = new Number();
-      content.local.comments = new Object();
-      content.local.views = new Number();
-      content.local.priority = new Number();
+      content.content = req.body.content;
+      content.tag = req.body.tag;
+      content.author = req.user._id;
+      content.timestamp = new Date().getTime();
+      content.city = geoCode.doReverseGeo(lat, lng, cb);
+      content.upvote = new Number();
+      content.comments = new Object();
+      content.views = new Number();
+      content.priority = new Number();
       content.save(function(err) {
         if (err)
           throw err;
@@ -41,22 +47,9 @@ module.exports = {
 
 }
 
-/* return true if centent is within radius from
-   the center. Otherwise return false */
-function isWithinRadius(radius, center, content) {
-  var lat1 = center.lat;
-  var long1 = center.lng;
-  var lat2 = content.local.coordinate.lat;
-  var long2 = content.local.coordinate.lng;
-
-  // Translate to a distance
-  var distance =
-    Math.sin(lat1 * Math.PI) * Math.sin(lat2 * Math.PI) +
-    Math.cos(lat1 * Math.PI) * Math.cos(lat2 * Math.PI) * 
-    Math.cos(Math.abs(long1 - long2) * Math.PI);
-
-  // Return the distance in meters
-  distance = Math.acos(distance) * 6370981.162;
-  if (distance <= radius) return true;
+/* return true if centent is in same city.
+   Otherwise return false */
+function inSameCity(city, content_city) {
+  if (city == content_city) return true;
   else return false;
 }
