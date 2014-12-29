@@ -10,7 +10,8 @@ home.controller("main", function($scope, $http) {
     }
     var resp = $http.get(query + "/" + lat + "/" + lng);
     resp.success(function(data, status, headers, config) {
-      $scope[query] = data;
+      $scope.content = data;
+      console.log(data);
     });
     resp.error(function(data, status, headers, config) {
       alert("AJAX failed!");
@@ -47,7 +48,7 @@ home.controller("main", function($scope, $http) {
     lat = pos.coords.latitude;
     lng = pos.coords.longitude;
     doGet("posts");
-    doGet("groups");
+    //doGet("groups");
   } 
   $scope.init = function() {
     getLocation();

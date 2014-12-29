@@ -46,8 +46,8 @@
     <div class="col-md-10" id="content_bar">
       <input type = "text" id = "post_query" ng-model="postVal">
       <button type = "button" ng-click="doPost()"> Post </button>
-      <div id = "newsfeed"> 
-        {{content}}
+      <div id = "newsfeed" ng-repeat= "elem in content"> 
+        {{elem.content}}
       </div>
     </div>
   </div>
