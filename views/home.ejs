@@ -2,12 +2,14 @@
 <html>
 <head>
   <title>PursueAlong</title>
+  <script src="bower_components/angular/angular.js"></script>
+  <script type="text/javascript" src="js/controller.js"></script>
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
   <link rel="stylesheet" href="./css/home.css">
 </head>
-<body>
-  <% if (0 && !user) {%> <-- DEBUG -->
+<body ng-app="home">
+  <% if (!user) {%> <-- DEBUG -->
   <div class="container">
     <div class="col-sm-6 col-sm-offset-3">
       <div class="page-header">
@@ -23,14 +25,15 @@
   <!--
   put user specified newsfeed/page here.
   -->
-  <div id = "container"> 
+  <div id = "container" ng-controller="main" ng-init="init()"> 
     <div class="col-md-12" id="top_bar">
       <div id = "search_bar" class = "col-md-10">
           <label> Search: </label>
-          <input type = "text" id = "query">
+          <input type = "text" id = "query" ng-model="inputVal">
+          {{inputVal}}
       </div> <!-- end of search_bar -->
       <div class = "col-md-2">
-        <h5><%= "first_name" %> <%= "last_name" %></h5>
+        <h5><%= "user.local.first_name" %> <%= "user.local.last_name" %></h5>
       </div>
     </div>
 
@@ -41,7 +44,11 @@
       </div>
     </div>
     <div class="col-md-10" id="content_bar">
-      Content 
+      <input type = "text" id = "post_query" ng-model="postVal">
+      <button type = "button" ng-click="doPost()"> Post </button>
+      <div id = "newsfeed"> 
+        {{content}}
+      </div>
     </div>
   </div>
   <% } %>

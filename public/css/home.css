@@ -1,0 +1,14 @@
+#tool_bar {
+  border-style: solid;
+  border-width: 1px;
+  height: 100vh;
+}
+#content_bar {
+  border-style: solid;
+  border-width: 1px;
+  height: 100vh;
+}
+#top_bar {
+  border-style: solid;
+  border-width: 1px;
+}
