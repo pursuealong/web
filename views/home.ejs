@@ -4,9 +4,10 @@
   <title>PursueAlong</title>
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./css/home.css">
 </head>
 <body>
-  <% if (!user) {%>
+  <% if (0 && !user) {%> <-- DEBUG -->
   <div class="container">
     <div class="col-sm-6 col-sm-offset-3">
       <div class="page-header">
@@ -22,17 +23,27 @@
   <!--
   put user specified newsfeed/page here.
   -->
-  <h3>Hi <%= user.local.first_name %>, you are logged in.</h3>
-  <div class ="container">
-    <div class="col-md-4">
-      Logo
+  <div id = "container"> 
+    <div class="col-md-12" id="top_bar">
+      <div id = "search_bar" class = "col-md-10">
+          <label> Search: </label>
+          <input type = "text" id = "query">
+      </div> <!-- end of search_bar -->
+      <div class = "col-md-2">
+        <h5><%= "first_name" %> <%= "last_name" %></h5>
+      </div>
     </div>
-    <div class="col-md-4">
-      blank
+
+    <div class="col-md-2" id="tool_bar">
+      <label> Groups: </label>
+      <div class="group_button">
+        Startup
+      </div>
     </div>
-    <div class="col-md-4">
-      <h5><%= user.local.first_name %> <%= user.local.last_name %></h3>
+    <div class="col-md-10" id="content_bar">
+      Content 
     </div>
+  </div>
   <% } %>
 </body>
 </html>
