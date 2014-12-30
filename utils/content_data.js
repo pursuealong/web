@@ -1,23 +1,30 @@
 var Content = require('../models/content');
 var geoCode = require('../geoLocation/geoCoding');
-
+var async = require('async');
+var _ = require('underscore');
 module.exports = {
 
   /* returns list of all contents within radius */
   getContent: function(lat, lng, req, cb) {
     Content.find({}, function (err, contents) {
-      var sorted = [];
       var city = geoCode.doReverseGeo(lat, lng, cb);
       var len = contents.length;
       // TODO: optimization perhaps?
-      (function() {
-        for (var i = 0; i < len; i++) {
-          if (inSameCity(city, contents[i].getCity()))
-            sorted.push(contents[i].setMask(req.user));
-        }
-      })();
-      if (err) return cb(err);
-      else return cb(err, sorted);
+      var fns = [];
+      _.each(contents, function(content) {
+        fns.push(function(done) {
+          content.setMask(req.user, done);
+        });
+      });
+      async.parallel(fns, function() {
+        var content_out = [];
+        _.each(contents, function(content) {
+          if (inSameCity(city, content.getCity())) {
+            content_out.push(content);
+          }
+        });
+        cb(err, content_out);
+      }); 
     });
   },
 

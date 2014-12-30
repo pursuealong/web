@@ -10,8 +10,8 @@ home.controller("main", function($scope, $http) {
     }
     var resp = $http.get(query + "/" + lat + "/" + lng);
     resp.success(function(data, status, headers, config) {
+      data.reverse();
       $scope.content = data;
-      console.log(data);
     });
     resp.error(function(data, status, headers, config) {
       alert("AJAX failed!");
@@ -19,20 +19,21 @@ home.controller("main", function($scope, $http) {
   }
   $scope.doPost = function() {
     var content = $scope.postVal;
+    $scope.postVal = "";
     var body = {
       content: content,
       lat: lat,
       lng: lng
     };
-    if ($scope.content) {
-      $scope.content = content + "<br>" + $scope.content;
-    } else {
-      $scope.content = content;
-    }
     var resp = $http.post("/posts", body);
     resp.success(function(data, status, headers, config) {
-      $scope.message = data;
-      console.log(data);
+      data.author = "me";
+      if ($scope.content) {
+        $scope.content.push(data);
+      } else {
+        $scope.content = [data];
+      }
+      $scope.content.reverse();
     });
     resp.error(function(data, status, headers, config) {
       alert("Failure Message: " + data);

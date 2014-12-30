@@ -4,11 +4,9 @@ module.exports = function(app, passport) {
 
   // select profile
   app.get('/profile', isLoggedIn, function(req, res) {
-    utils.getUser(req.user.local.email, function (err, user) { 
-      res.render('user_profile.ejs', {
-        user : user
-      });
-    }); 
+    res.render('user_profile.ejs', {
+        user : req.user
+    });
   });
 }
 

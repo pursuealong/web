@@ -33,7 +33,7 @@
           {{inputVal}}
       </div> <!-- end of search_bar -->
       <div class = "col-md-2">
-        <h5><%= "user.local.first_name" %> <%= "user.local.last_name" %></h5>
+        <h5>Hi <%= user.local.first_name %> <%= user.local.last_name %>!</h5>
       </div>
     </div>
 
@@ -46,8 +46,8 @@
     <div class="col-md-10" id="content_bar">
       <input type = "text" id = "post_query" ng-model="postVal">
       <button type = "button" ng-click="doPost()"> Post </button>
-      <div id = "newsfeed" ng-repeat= "elem in content"> 
-        {{elem.content}}
+      <div id = "newsfeed" ng-repeat= "elem in content track by $index"> 
+        {{elem.content}} by {{elem.author}}
       </div>
     </div>
   </div>

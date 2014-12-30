@@ -55,18 +55,24 @@ schema.methods.upViews = function() {
    is set to uid. Change the field to
    username if user is not friend with
    author of the content. */
-schema.methods.setMask = function(user) {
+schema.methods.setMask = function(user, cb) {
   var User = user.getUser();
   var uid = this.author;
   var comments = this.comments;
   var len = comments.length;
-
+  var self = this;
   // need to check both author and comments
-  if (!_.contains(User.friends, uid) && user._id != uid)
-    this.author = util.getUsername(uid);
-  else
-    this.author = util.getRealname(uid);
-
+  if (!_.contains(User.friends, uid) && user._id != uid) {
+    util.getUsername(uid, function (username) {
+      self.author = username;
+      cb();
+    });
+  } else {
+    util.getRealname(uid, function (realname) {
+      self.author = realname;
+      cb();
+    });
+  }
   // TODO: check for authors of comments
   /*
   (function() {

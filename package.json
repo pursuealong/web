@@ -22,6 +22,7 @@
     "ejs": "*",
     "cookie-parser": "*", 
     "express-session": "*",
-    "crypto": "*"
+    "crypto": "*",
+    "async": "*"
   }
 }
