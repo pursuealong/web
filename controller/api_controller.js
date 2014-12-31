@@ -6,13 +6,21 @@ module.exports = function(app, passport) {
     var lat = req.params.lat;
     var lng = req.params.lng;
     utils.getContent(lat, lng, req, function (err, content) { 
-      res.send(content);
+      try {
+        res.json(content);
+      } catch (err) {
+        console.log(err);
+      }
     });
   });
 
   app.post('/posts', function(req, res) {
     utils.postContent(req, function (err, content) { 
-      res.send(content);
+      try {
+        res.json(content);
+      } catch (err) {
+        console.log(err);
+      }
     });
   });
 

@@ -3,10 +3,14 @@ var utils = require('../utils/user_data');
 module.exports = function(app, passport) {
 
   // select profile
-  app.get('/profile', isLoggedIn, function(req, res) {
-    res.render('user_profile.ejs', {
-        user : req.user
-    });
+  app.get('/profile', function(req, res) {
+    if (req.isAuthenticated()) {
+      res.render('user_profile.ejs', {
+          user : req.user
+      });
+    } else {
+      res.redirect('/');
+    }
   });
 }
 

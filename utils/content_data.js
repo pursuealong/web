@@ -7,10 +7,16 @@ module.exports = {
   /* returns list of all contents within radius */
   getContent: function(lat, lng, req, cb) {
     Content.find({}, function (err, contents) {
-      var city = geoCode.doReverseGeo(lat, lng, cb);
+      var city;
       var len = contents.length;
       // TODO: optimization perhaps?
       var fns = [];
+      fns.push(function(done) {
+        geoCode.doReverseGeo(lat, lng, function(data) {
+          city = data;
+          done();
+        });
+      });
       _.each(contents, function(content) {
         fns.push(function(done) {
           content.setMask(req.user, done);
@@ -39,16 +45,22 @@ module.exports = {
       content.tag = req.body.tag;
       content.author = req.user._id;
       content.timestamp = new Date().getTime();
-      content.city = geoCode.doReverseGeo(lat, lng, cb);
+      var fns = [];
+      fns.push(function(done) {
+        geoCode.doReverseGeo(lat, lng, function(city) {
+          content.city = city;
+          done();
+        });
+      });
       content.upvote = new Number();
       content.comments = new Object();
       content.views = new Number();
       content.priority = new Number();
-      content.save(function(err) {
-        if (err)
-          throw err;
-        return cb(null, content);
-      });
+      async.parallel(fns, function() {
+        content.save(function(err) {
+          cb(err, content);
+        });
+      }); 
     });
   }
 

@@ -46,8 +46,8 @@
     <div class="col-md-10" id="content_bar">
       <input type = "text" id = "post_query" ng-model="postVal">
       <button type = "button" ng-click="doPost()"> Post </button>
-      <div id = "newsfeed" ng-repeat= "elem in content track by $index"> 
-        {{elem.content}} by {{elem.author}}
+      <div id = "newsfeed" ng-repeat= "elem in content | limitTo: 20 track by $index"> 
+        {{elem.content}} by {{elem.author}} from {{elem.city}}
       </div>
     </div>
   </div>
