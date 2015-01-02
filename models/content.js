@@ -39,7 +39,6 @@ schema.methods.addComment = function(uid, text) {
   newComment.upvotes = 0;
   newComment.text = text;
   newComment.author = uid;
-  newComment.save();
   newComment.save(function(err) {
     if (err)
       throw err;

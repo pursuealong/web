@@ -12,3 +12,7 @@
   border-style: solid;
   border-width: 1px;
 }
+
+#top_bar_elem {
+  float: right;
+}

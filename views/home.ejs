@@ -4,9 +4,9 @@
   <title>PursueAlong</title>
   <script src="bower_components/angular/angular.js"></script>
   <script type="text/javascript" src="js/controller.js"></script>
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="./css/home.css">
+  <link href="sticky-footer-navbar.css" rel="stylesheet">
 </head>
 <body ng-app="home">
   <% if (!user) {%> <-- DEBUG -->
@@ -26,17 +26,29 @@
   put user specified newsfeed/page here.
   -->
   <div id = "container" ng-controller="main" ng-init="init()"> 
-    <div class="col-md-12" id="top_bar">
+    <div class="collapse navbar-collapse" id="top_bar">
       <div id = "search_bar" class = "col-md-10">
           <label> Search: </label>
           <input type = "text" id = "query" ng-model="inputVal">
           {{inputVal}}
       </div> <!-- end of search_bar -->
-      <div class = "col-md-2">
-        <h5>Hi <%= user.local.first_name %> <%= user.local.last_name %>!</h5>
-      </div>
-    </div>
-
+      <ul class="nav navbar-nav" id="top_bar_elem"> 
+        <li><a href="/">Home</a></li>
+        <li><a href="/profile"><%= user.local.first_name %> <%= user.local.last_name %></a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header">Nav header</li>
+            <li><a href="#">Separated link</a></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div> 
     <div class="col-md-2" id="tool_bar">
       <label> Groups: </label>
       <div class="group_button">
