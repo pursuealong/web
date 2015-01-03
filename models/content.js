@@ -35,6 +35,7 @@ schema.methods.upVote = function(user) {
 };
 
 schema.methods.addComment = function(uid, text) {
+  var self = this;
   var newComment = new Comment();
   newComment.upvotes = 0;
   newComment.text = text;
@@ -42,8 +43,8 @@ schema.methods.addComment = function(uid, text) {
   newComment.save(function(err) {
     if (err)
       throw err;
-    this.comments.push(newComment._id);
   });
+  self.comments.push(newComment._id);
 };
 
 schema.methods.upViews = function() {

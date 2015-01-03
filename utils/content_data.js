@@ -1,14 +1,15 @@
 var Content = require('../models/content');
+var utils = require('../utils/comment_data');
 var geoCode = require('../geoLocation/geoCoding');
 var async = require('async');
 var _ = require('underscore');
+
 module.exports = {
 
   /* returns list of all contents within radius */
   getContent: function(lat, lng, req, cb) {
     Content.find({}, function (err, contents) {
       var city;
-      var len = contents.length;
       // TODO: optimization perhaps?
       var fns = [];
       fns.push(function(done) {
@@ -22,6 +23,11 @@ module.exports = {
           content.setMask(req.user, done);
         });
       });
+       _.each(contents, function(content) {
+        fns.push(function(done) {
+          utils.getComments(content, done);
+        });
+      });
       async.parallel(fns, function() {
         var content_out = [];
         _.each(contents, function(content) {
@@ -30,7 +36,7 @@ module.exports = {
           }
         });
         cb(err, content_out);
-      }); 
+      });
     });
   },
 
@@ -53,7 +59,7 @@ module.exports = {
         });
       });
       content.upvote = new Number();
-      content.comments = new Object();
+      content.comments = new Array();
       content.views = new Number();
       content.priority = new Number();
       async.parallel(fns, function() {
