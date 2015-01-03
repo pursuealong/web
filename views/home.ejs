@@ -3,13 +3,14 @@
 <head>
   <title>PursueAlong</title>
   <script src="bower_components/angular/angular.js"></script>
+  <script type="text/javascript" src="./bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/controller.js"></script>
   <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="./css/home.css">
-  <link href="sticky-footer-navbar.css" rel="stylesheet">
 </head>
 <body ng-app="home">
-  <% if (!user) {%> <-- DEBUG -->
+  <% if (!user) {%> <!-- DEBUG -->
   <div class="container">
     <div class="col-sm-6 col-sm-offset-3">
       <div class="page-header">
@@ -25,22 +26,22 @@
   <!--
   put user specified newsfeed/page here.
   -->
-  <div id = "container" ng-controller="main" ng-init="init()"> 
+  <div id = "container" ng-controller="main" ng-init="init()">
     <div class="collapse navbar-collapse" id="top_bar">
       <div id = "search_bar" class = "col-md-10">
           <label> Search: </label>
           <input type = "text" id = "query" ng-model="inputVal">
           {{inputVal}}
       </div> <!-- end of search_bar -->
-      <ul class="nav navbar-nav" id="top_bar_elem"> 
+      <ul class="nav navbar-nav" id="top_bar_elem">
         <li><a href="/">Home</a></li>
         <li><a href="/profile"><%= user.local.first_name %> <%= user.local.last_name %></a></li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Account<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
+            <li><a href="/logout">Logout</a></li>
+            <li><a href="#">Create Group</a></li>
+            <li><a href="#"></a></li>
             <li class="divider"></li>
             <li class="dropdown-header">Nav header</li>
             <li><a href="#">Separated link</a></li>
@@ -48,7 +49,7 @@
           </ul>
         </li>
       </ul>
-    </div> 
+    </div>
     <div class="col-md-2" id="tool_bar">
       <label> Groups: </label>
       <div class="group_button">
@@ -58,7 +59,7 @@
     <div class="col-md-10" id="content_bar">
       <input type = "text" id = "post_query" ng-model="postVal">
       <button type = "button" ng-click="doPost()"> Post </button>
-      <div id = "newsfeed" ng-repeat= "elem in content | limitTo: 20 track by $index"> 
+      <div id = "newsfeed" ng-repeat= "elem in content | limitTo: 20 track by $index">
         {{elem.content}} by {{elem.author}} from {{elem.city}}
       </div>
     </div>
