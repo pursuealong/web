@@ -2,17 +2,54 @@
   border-style: solid;
   border-width: 1px;
   height: 100vh;
+  background-color: #E0E0E0;
 }
+
 #content_bar {
   border-style: solid;
   border-width: 1px;
   height: 100vh;
+  background-color: #E0E0E0;
 }
+
 #top_bar {
   border-style: solid;
   border-width: 1px;
+  background-color: #A80000;
+}
+
+#newsfeed {
+  background-color: white;
+  text-align: center;
+  border-radius: 3px;
+  border-collapse: separate;
+  border-spacing: 10px 50px;
+  margin: 10px;
 }
 
 #top_bar_elem {
   float: right;
+}
+
+#search_bar {
+  z-index: 100;
+}
+
+#post_query {
+}
+
+#query {
+  border-radius: 10px;
+}
+
+#profile {
+  color: white;
+}
+
+#home {
+  color: white;
+}
+
+#account {
+  color: white;
 }
