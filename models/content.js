@@ -43,6 +43,7 @@ schema.methods.addUpVote = function(user, cb) {
   self.save(function(err) {
     cb(err, self.upvote);
   });
+  // TODO: Increment the upvote count for group as well.
 };
 
 schema.methods.getUpVotes = function(cb) {
