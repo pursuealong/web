@@ -29,7 +29,7 @@ schema.methods.getGroup = function(gid, cb) {
 }
 
 /** Gets all the group in the city */
-schema.methods.getGroups: function(cb) {
+schema.methods.getGroups = function(cb) {
   var query = {};
   this.groups.forEach(function(elem, index) {
     query['_id'] = elem;
