@@ -38,8 +38,21 @@ home.controller("main", function($scope, $http) {
     resp.error(function(data, status, headers, config) {
       alert("Failure Message: " + data);
     });
-
   }
+
+  $scope.doUpvote = function(content) {
+    console.log(content);
+    var resp = $http({
+      method: "POST",
+      url: "/upvote/" + content._id,
+      data: {content: content}
+    });
+    resp.success(function(data, status, headers, config) {
+      // Success! 
+      console.log(data);
+    });
+  }
+
   function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
