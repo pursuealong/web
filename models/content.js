@@ -12,7 +12,7 @@ var schema = mongoose.Schema({
   content   : Object,
   tag       : String,
   author    : String, /* uid of the content creator */
-  timestamp : String,
+  timestamp : Number,
   city      : String,
   upvote    : Number,
   comments  : [String], /* [ cid1, cid2, ... ] */
@@ -21,34 +21,60 @@ var schema = mongoose.Schema({
 
 });
 
-schema.methods.getTag = function() {
+schema.methods.getTag = function(cb) {
   return this.tag;
 };
 
-schema.methods.getCity = function() {
+schema.methods.getCity = function(cb) {
   return this.city;
 };
 
-schema.methods.upVote = function(user) {
-  this.upvote++;
-  user.getUser().upvotes_post.push(this._id);
+schema.methods.getTimeStamp = function(cb) {
+  return this.timestamp;
 };
 
-schema.methods.addComment = function(uid, text) {
+schema.methods.addUpVote = function(user, cb) {
+  var self = this;
+  self.upvote++;
+  user.getUser().upvotes_post.push(self._id);
+  process.nextTick(function() {
+    user.save();
+  });
+  self.save(function(err) {
+    cb(err, self.upvote);
+  });
+  // TODO: Increment the upvote count for group as well.
+};
+
+schema.methods.getUpVotes = function(cb) {
+  return this.upvote;
+};
+
+schema.methods.addView = function(cb) {
+  var self = this;
+  self.views++;
+  self.save(function(err) {
+    cb(err, self.views);
+  });
+};
+
+schema.methods.getViews = function(cb) {
+  return this.views;
+};
+
+schema.methods.addComment = function(uid, text, cb) {
   var self = this;
   var newComment = new Comment();
+  self.comments.push(newComment._id);
   newComment.upvotes = 0;
   newComment.text = text;
   newComment.author = uid;
-  newComment.save(function(err) {
-    if (err)
-      throw err;
+  process.nextTick(function() {
+    self.save();
   });
-  self.comments.push(newComment._id);
-};
-
-schema.methods.upViews = function() {
-  this.views++;
+  newComment.save(function(err) {
+    cb(err, newComment);
+  });
 };
 
 /* Assume that author field of content in DB

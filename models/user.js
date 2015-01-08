@@ -23,7 +23,6 @@ var schema = mongoose.Schema({
   },
 
   facebook   : {
-    id            : String,
     online        : Boolean,
     token         : String,
     email         : String,

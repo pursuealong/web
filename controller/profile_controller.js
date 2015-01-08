@@ -12,6 +12,13 @@ module.exports = function(app, passport) {
       res.redirect('/');
     }
   });
+
+  // logout
+  app.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+  });
+
 }
 
 // route middleware to ensure user is logged in

@@ -23,11 +23,12 @@ module.exports = {
           content.setMask(req.user, done);
         });
       });
+      /* TODO: display handful of comments
        _.each(contents, function(content) {
         fns.push(function(done) {
           utils.getComments(content, done);
         });
-      });
+      });*/
       async.parallel(fns, function() {
         var content_out = [];
         _.each(contents, function(content) {
@@ -50,7 +51,12 @@ module.exports = {
       content.content = req.body.content;
       content.tag = req.body.tag;
       content.author = req.user._id;
-      content.timestamp = new Date().getTime();
+      if (!Date.now) {
+        Date.now = function() {
+          return new Date().getTime();
+        }
+      }
+      content.timestamp = Date.now();
       var fns = [];
       fns.push(function(done) {
         geoCode.doReverseGeo(lat, lng, function(city) {
@@ -67,6 +73,34 @@ module.exports = {
           cb(err, content);
         });
       }); 
+    });
+  },
+
+  /* Get upvotes given Content obj */
+  getUpvotes : function(content, cb) {
+    content.getUpVotes(function (upvotes) {
+      cb(null, upvotes);
+    });
+  },
+
+  /* Add an upvote to a Content obj */
+  addUpvote : function(content, user, cb) {
+    content.addUpVote(user, function (err, upvotes) {
+      cb(err, upvotes);
+    });
+  },
+
+  /* Get view givevn Content obj */
+  getViews : function(content, cb) {
+    content.getViews(function (views) {
+      cb(null, views);
+    });
+  },
+
+  /* Add a view to a Content obj */
+  addView : function(content, cb) {
+    content.addView(function (err, views) {
+      cb(err, views);
     });
   }
 
