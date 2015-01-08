@@ -1,7 +1,9 @@
 /* MongoDB Content model */
 
 var mongoose = require('mongoose');
+var User = require('./user');
 var _ = require('underscore');
+var generator = require('mongoose-gen');
 var util = require('../utils/user_data');
 
 //TODO: JS Number is 53 bit decimal, 11 bit floating point.
@@ -21,22 +23,33 @@ var schema = mongoose.Schema({
 
 });
 
-schema.methods.getTag = function(cb) {
+schema.methods.toModel = function(json, cb) {
+  try {
+    var content = generator.schema('Content', json);
+    cb(content);
+  } catch(err) {
+    throw err;
+  }
+};
+
+schema.methods.getTag = function() {
   return this.tag;
 };
 
-schema.methods.getCity = function(cb) {
+schema.methods.getCity = function() {
   return this.city;
 };
 
-schema.methods.getTimeStamp = function(cb) {
+schema.methods.getTimeStamp = function() {
   return this.timestamp;
 };
 
 schema.methods.addUpVote = function(user, cb) {
   var self = this;
   self.upvote++;
-  user.getUser().upvotes_post.push(self._id);
+  User.toModel(JSON.parse(json), function (user) {
+    user.getUser().upvotes_cmts.push(self._id);
+  });
   process.nextTick(function() {
     user.save();
   });
@@ -46,7 +59,7 @@ schema.methods.addUpVote = function(user, cb) {
   // TODO: Increment the upvote count for group as well.
 };
 
-schema.methods.getUpVotes = function(cb) {
+schema.methods.getUpVotes = function() {
   return this.upvote;
 };
 
@@ -58,7 +71,7 @@ schema.methods.addView = function(cb) {
   });
 };
 
-schema.methods.getViews = function(cb) {
+schema.methods.getViews = function() {
   return this.views;
 };
 

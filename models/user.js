@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose');
 var crypto = require('crypto');
+var generator = require('mongoose-gen');
 var bcrypt   = require('bcrypt-nodejs');
 
 //TODO: Add more on current schema
@@ -38,6 +39,15 @@ var schema = mongoose.Schema({
 
   }
 });
+
+schema.methods.toModel = function(json, cb) {
+  try {
+    var user = generator.schema('User', json);
+    cb(user);
+  } catch(err) {
+    throw err;
+  }
+};
 
 schema.methods.getUser = function() {
   if (!this.local.token)

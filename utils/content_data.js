@@ -77,30 +77,34 @@ module.exports = {
   },
 
   /* Get upvotes given Content obj */
-  getUpvotes : function(content, cb) {
-    content.getUpVotes(function (upvotes) {
-      cb(null, upvotes);
+  getUpvotes : function(json, cb) {
+    Content.toModel(JSON.parse(json), function (content) {
+      cb(null, content.getUpVotes());
     });
   },
 
   /* Add an upvote to a Content obj */
-  addUpvote : function(content, user, cb) {
-    content.addUpVote(user, function (err, upvotes) {
-      cb(err, upvotes);
+  addUpvote : function(json, user, cb) {
+    Content.toModel(JSON.parse(json), function (content) {
+      content.addUpVote(user, function (err, upvotes) {
+        cb(err, upvotes);
+      });
     });
   },
 
   /* Get view givevn Content obj */
-  getViews : function(content, cb) {
-    content.getViews(function (views) {
-      cb(null, views);
+  getViews : function(json, cb) {
+    Content.toModel(JSON.parse(json), function (content) {
+      cb(null, content.getViews());
     });
   },
 
   /* Add a view to a Content obj */
-  addView : function(content, cb) {
-    content.addView(function (err, views) {
-      cb(err, views);
+  addView : function(json, cb) {
+    Content.toModel(JSON.parse(json), function (content) {
+      content.addView(function (err, views) {
+        cb(err, views);
+      });
     });
   }
 
