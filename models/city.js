@@ -2,10 +2,10 @@
 
 var mongoose = require('mongoose');
 var _ = require('underscore');
-var Group = require('../models/group);
+var Group = require('../models/group');
 
-var schmea = mongoose.Schema({
-  city          : String,
+var schema = mongoose.Schema({
+  cityname      : String,
   groups        : [String], // [gid0, gid1, ...]
   timestamp     : Number,
   priority      : Number,
@@ -13,7 +13,7 @@ var schmea = mongoose.Schema({
   upvote        : Number
 });
 
-schmea.methods.upvote = function() {
+schema.methods.addUpvote = function() {
   this.upvote++;
 }
 

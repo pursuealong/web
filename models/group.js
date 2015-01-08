@@ -19,15 +19,15 @@ schema.methods.getTag = function() {
   return this.tag;
 }
 
-schema.methods.upvote = function() {
+schema.methods.addUpvote = function() {
   this.upvote++;
 }
 
-schema.methods.addPost(pid) {
+schema.methods.addPost = function(pid) {
   posts.push(pid);
 }
 
-schema.methods.getPosts(cb) {
+schema.methods.getPosts = function(cb) {
   var query = {};
   this.posts.forEach(function(elem, index) {
     query['_id'] = elem;
@@ -37,8 +37,8 @@ schema.methods.getPosts(cb) {
   });
 }
 
-schema.methods.getPost(pid, cb) {
-  Content.findOne({'_id': pid, function(err, post) {
+schema.methods.getPost = function(pid, cb) {
+  Content.findOne({'_id': pid}, function(err, post) {
     cb(post);
   });
 }
