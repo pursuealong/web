@@ -21,4 +21,16 @@ module.exports = function(app, passport) {
       successRedirect : '/profile',
       failureRedirect : '/'
     }));
+
+  // unlink account
+  /* used to unlink accounts. for social accounts, just remove the token
+  for local account, remove email and password */
+  app.get('/unlink/facebook', function(req, res) {
+    var user = req.user;
+    user.facebook.token = undefined;
+    user.save(function(err) {
+      res.redirect('/profile');
+    });
+  });
+
 }
