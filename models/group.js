@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose');
 var _ = require('underscore');
-var util = require('../util/user_data');
+var Content = require('../models/content');
 
 var schema = mongoose.Schema({
   gid        : String,
@@ -27,4 +27,19 @@ schema.methods.addPost(pid) {
   posts.push(pid);
 }
 
+schema.methods.getPosts(cb) {
+  var query = {};
+  this.posts.forEach(function(elem, index) {
+    query['_id'] = elem;
+  });
+  Content.find(query, function(posts) {
+    cb(posts);
+  });
+}
+
+schema.methods.getPost(pid, cb) {
+  Content.findOne({'_id': pid, function(err, post) {
+    cb(post);
+  });
+}
 module.exports = mongoose.model("Group", schema);
