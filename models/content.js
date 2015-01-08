@@ -22,15 +22,15 @@ var schema = mongoose.Schema({
 });
 
 schema.methods.getTag = function(cb) {
-  cb(this.tag);
+  return this.tag;
 };
 
 schema.methods.getCity = function(cb) {
-  cb(this.city);
+  return this.city;
 };
 
 schema.methods.getTimeStamp = function(cb) {
-  cb(this.timestamp);
+  return this.timestamp;
 };
 
 schema.methods.addUpVote = function(user, cb) {
@@ -47,7 +47,7 @@ schema.methods.addUpVote = function(user, cb) {
 };
 
 schema.methods.getUpVotes = function(cb) {
-  cb(this.upvote);
+  return this.upvote;
 };
 
 schema.methods.addView = function(cb) {
@@ -59,7 +59,7 @@ schema.methods.addView = function(cb) {
 };
 
 schema.methods.getViews = function(cb) {
-  cb(this.views);
+  return this.views;
 };
 
 schema.methods.addComment = function(uid, text, cb) {
