@@ -10,11 +10,11 @@ var schema = mongoose.Schema({
   timestamp     : Number,
   priority      : Number,
   members       : [String],
-  upvote        : Number
+  upvote        : [String]
 });
 
 schema.methods.addUpvote = function() {
-  this.upvote++;
+  // TODO: Implement this function later 
 }
 
 schema.methods.addGroup = function(gid) {

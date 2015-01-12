@@ -3,6 +3,7 @@
 var mongoose = require('mongoose');
 var _ = require('underscore');
 var util = require('../utils/user_data');
+var User = require('../models/user');
 
 //TODO: JS Number is 53 bit decimal, 11 bit floating point.
 // Maybe we should consider using full 64 bit integer scheme.
@@ -14,7 +15,7 @@ var schema = mongoose.Schema({
   author    : String, /* uid of the content creator */
   timestamp : Number,
   city      : String,
-  upvote    : Number,
+  upvote    : [String], /* [uid1, uid2, ..] */
   comments  : [String], /* [ cid1, cid2, ... ] */
   views     : Number,
   priority  : Number
@@ -35,19 +36,16 @@ schema.methods.getTimeStamp = function(cb) {
 
 schema.methods.addUpVote = function(user, cb) {
   var self = this;
-  console.log(user);
-  var user_obj = user.getUser();
+  user_obj = user.getUser();
   if (!user_obj.upvotes_post) user_obj.upvotes_post = {};
   if (!user_obj.upvotes_post[self._id]) {
-    self.upvote++;
+    self.upvote.push(user._id);
     user_obj.upvotes_post[self._id] = 1;
   } else {
     // TODO: Figure out what to do in this case
     console.log("User has already upvoted");
   }
-  process.nextTick(function() {
-    user.save();
-  });
+  user.save();
   self.save(function(err) {
     cb(err, self.upvote);
   });

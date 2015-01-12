@@ -11,7 +11,7 @@ var schema = mongoose.Schema({
   timestamp  : Number,
   priority   : Number,
   members    : [String], // [uid0, uid1, ...]
-  upvote     : Number,
+  upvote     : [String],
   posts      : [String] // [pid0, pid1, ...]
 });
 
@@ -20,7 +20,7 @@ schema.methods.getTag = function() {
 }
 
 schema.methods.addUpvote = function() {
-  this.upvote++;
+  //TODO: Implement this function later
 }
 
 schema.methods.addPost = function(pid) {

@@ -64,7 +64,7 @@ module.exports = {
           done();
         });
       });
-      content.upvote = new Number();
+      content.upvote = new Array();
       content.comments = new Array();
       content.views = new Number();
       content.priority = new Number();
