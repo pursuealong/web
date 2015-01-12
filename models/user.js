@@ -18,8 +18,8 @@ var schema = mongoose.Schema({
     profile_photo : String,
     interests     : [String],
     friends       : [String],
-    upvotes_post  : [String], /* [ pid1, pid2, ... ] */
-    upvotes_cmts  : [String] /* [ cid1, cid2, ... ] */
+    upvotes_post  : Object, /* { pid1, pid2, ... } */
+    upvotes_cmts  : Object /* { cid1, cid2, ... } */
   },
 
   facebook   : {
@@ -33,8 +33,8 @@ var schema = mongoose.Schema({
     profile_photo : String,
     interests     : [String],
     friends       : [String],
-    upvotes_post  : [String], /* [ pid1, pid2, ... ] */
-    upvotes_cmts  : [String] /* [ cid1, cid2, ... ] */
+    upvotes_post  : Object, /* { pid1, pid2, ... } */
+    upvotes_cmts  : Object /* { cid1, cid2, ... } */
 
   }
 });

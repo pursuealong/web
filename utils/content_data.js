@@ -78,15 +78,20 @@ module.exports = {
 
   /* Get upvotes given Content obj */
   getUpvotes : function(content, cb) {
-    content.getUpVotes(function (upvotes) {
-      cb(null, upvotes);
+    Content.findOne({'_id': content._id}, function(err, content_obj) {
+      content_obj.getUpVotes(function (upvotes) {
+        console.log(content_obj);
+        cb(null, upvotes);
+      });
     });
   },
 
   /* Add an upvote to a Content obj */
   addUpvote : function(content, user, cb) {
-    content.addUpVote(user, function (err, upvotes) {
-      cb(err, upvotes);
+    Content.findOne({'_id': content._id}, function(err, content_obj) {
+      content_obj.addUpVote(user, function (err, upvotes) {
+        cb(err, upvotes);
+      });
     });
   },
 

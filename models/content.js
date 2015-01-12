@@ -35,8 +35,16 @@ schema.methods.getTimeStamp = function(cb) {
 
 schema.methods.addUpVote = function(user, cb) {
   var self = this;
-  self.upvote++;
-  user.getUser().upvotes_post.push(self._id);
+  console.log(user);
+  var user_obj = user.getUser();
+  if (!user_obj.upvotes_post) user_obj.upvotes_post = {};
+  if (!user_obj.upvotes_post[self._id]) {
+    self.upvote++;
+    user_obj.upvotes_post[self._id] = 1;
+  } else {
+    // TODO: Figure out what to do in this case
+    console.log("User has already upvoted");
+  }
   process.nextTick(function() {
     user.save();
   });
