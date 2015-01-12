@@ -41,7 +41,6 @@ home.controller("main", function($scope, $http) {
   }
 
   $scope.doUpvote = function(content) {
-    console.log(content);
     var resp = $http({
       method: "POST",
       url: "/upvote/" + content._id,
@@ -49,7 +48,17 @@ home.controller("main", function($scope, $http) {
     });
     resp.success(function(data, status, headers, config) {
       // Success! 
-      console.log(data);
+      if (data.upvote.length != content.upvote.length) {
+        var i = 0;
+        for (i = 0; i < $scope.content.length; i ++) {
+          if ($scope.content[i]._id == data._id) {
+            $scope.content[i].upvote = data.upvote;
+            break;
+          }
+        }
+      } else {
+        // alert the user: one has already upvoted.
+      }
     });
   }
 

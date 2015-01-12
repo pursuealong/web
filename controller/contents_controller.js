@@ -46,9 +46,9 @@ module.exports = function(app, passport) {
   app.post('/upvote/:pid/', function(req, res) {
     var content = req.body.content;
     var user = req.user;
-    utils.addUpvote(content, user, function (err, upvotes) {
+    utils.addUpvote(content, user, function (err, content_changed) {
       try {
-        res.json(upvotes);
+        res.json(content_changed);
       } catch (err) {
         console.log(err);
       }

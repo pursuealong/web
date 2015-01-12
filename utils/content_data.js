@@ -89,8 +89,9 @@ module.exports = {
   /* Add an upvote to a Content obj */
   addUpvote : function(content, user, cb) {
     Content.findOne({'_id': content._id}, function(err, content_obj) {
-      content_obj.addUpVote(user, function (err, upvotes) {
-        cb(err, upvotes);
+      content_obj.addUpVote(user, function (err, content) {
+        cb(err, content);
+
       });
     });
   },

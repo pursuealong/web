@@ -63,10 +63,10 @@
         <div id = "post" ng-repeat= "elem in content | limitTo: 20 track by $index">
           {{elem.content}} by {{elem.author}} from {{elem.city}}
           <br>
-          <div id = "upvote" ng-repeat="uv in elem.upvote">
-            {{uv}}
+          <div id = "upvote">
+            Upvotes: {{elem.upvote.length}}
+            <button id={{elem._id}} ng-click="doUpvote(elem)"> upvote </button>
           </div>
-          <button id={{elem._id}} ng-click="doUpvote(elem)"> upvote </button>
         </div>
       </div>
     </div>
