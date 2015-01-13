@@ -117,12 +117,12 @@ module.exports = function(passport) {
             if (!user.facebook.token) {
               user.facebook.token = token;
               user.facebook.id = profile.id;
-              user.facebook.first_name  = profile.name.givenName;
-              user.facebook.last_name = profile.name.familyName;
-              user.facebook.email = profile.emails[0].value;
-              user.facebook.gender = profile.gender;
-              user.facebook.username = req.body.username;
-              user.facebook.interests = new Array; // TODO: pull out user interests
+              user.local.first_name  = profile.name.givenName;
+              user.local.last_name = profile.name.familyName;
+              user.local.email = profile.emails[0].value;
+              user.local.gender = profile.gender;
+              user.local.username = req.body.username;
+              user.local.interests = new Array; // TODO: pull out user interests
               user.save(function(err) {
               if (err)
                 throw err;
@@ -135,12 +135,12 @@ module.exports = function(passport) {
             var newUser = new User();
             newUser.facebook.token = token;
             newUser.facebook.id = profile.id;
-            newUser.facebook.first_name  = profile.name.givenName;
-            newUser.facebook.last_name = profile.name.familyName;
-            newUser.facebook.email = profile.emails[0].value;
-            newUser.facebook.gender = profile.gender;
-            newUser.facebook.username = req.body.username;
-            newUser.facebook.interests = new Array; // TODO: pull out user interests
+            newUser.local.first_name  = profile.name.givenName;
+            newUser.local.last_name = profile.name.familyName;
+            newUser.local.email = profile.emails[0].value;
+            newUser.local.gender = profile.gender;
+            newUser.local.username = req.body.username;
+            newUser.local.interests = new Array; // TODO: pull out user interests
             newUser.save(function(err) {
               if (err)
                 throw err;
@@ -153,12 +153,12 @@ module.exports = function(passport) {
           var user = req.user;
           user.facebook.token = token;
           user.facebook.id = profile.id;
-          user.facebook.first_name  = profile.name.givenName;
-          user.facebook.last_name = profile.name.familyName;
-          user.facebook.email = profile.emails[0].value;
-          user.facebook.gender = profile.gender;
-          user.facebook.username = req.body.username;
-          user.facebook.interests = new Array; // TODO: pull out user interests
+          user.local.first_name  = profile.name.givenName;
+          user.local.last_name = profile.name.familyName;
+          user.local.email = profile.emails[0].value;
+          user.local.gender = profile.gender;
+          user.local.username = req.body.username;
+          user.local.interests = new Array; // TODO: pull out user interests
           user.save(function(err) {
             if (err)
               throw err;

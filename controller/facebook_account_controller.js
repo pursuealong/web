@@ -8,18 +8,9 @@ module.exports = function(app, passport) {
   // handle the callback after facebook has authenticated the user
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', {
-      successRedirect : '/profile',
-      failureRedirect : '/'
-    }));
-
-  // send to facebook to do the authentication
-  app.get('/connect/facebook', passport.authorize('facebook', { scope : 'email' }));
-
-  // handle the callback after facebook has authorized the user
-  app.get('/connect/facebook/callback',
-    passport.authorize('facebook', {
-      successRedirect : '/profile',
-      failureRedirect : '/'
+      successRedirect : '/',
+      failureRedirect : '/',
+      failureFlash : true // allow flash messages
     }));
 
   // unlink account
@@ -29,7 +20,7 @@ module.exports = function(app, passport) {
     var user = req.user;
     user.facebook.token = undefined;
     user.save(function(err) {
-      res.redirect('/profile');
+      res.redirect('/');
     });
   });
 

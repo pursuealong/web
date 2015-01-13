@@ -9,14 +9,14 @@ var session = require('express-session');
 var flash = require('connect-flash');
 var RedisStore = require('connect-redis')(session);
 var mongoose = require("mongoose");
-var dbKeys = require('./config/keys.js');
+var dbKeys = require('./auth/keys.js');
 //var handler = require('./handler.js');
 var app = express();
 var http = require('http').Server(app);
 //connect to MongoDB
 mongoose.connect(dbKeys.mongo);
 // pass in passport for configuration
-require('./config/passport')(passport);
+require('./auth/passport')(passport);
 
 // express application configuration
 app.use(logger('dev')); // log every request to the console
