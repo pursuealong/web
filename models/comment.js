@@ -1,6 +1,8 @@
 /* MongoDB Comment model */
 
 var mongoose = require('mongoose');
+var User = require('./user');
+var generator = require('mongoose-gen');
 
 var schema = mongoose.Schema({
 
@@ -29,8 +31,8 @@ schema.methods.addUpVote = function(user, cb) {
   });
 };
 
-schema.methods.getUpVotes = function(cb) {
-  cb(this.upvote);
+schema.methods.getUpVotes = function() {
+  return this.upvote;
 };
 
 // create the model for comments and expose it to our app

@@ -91,22 +91,23 @@ module.exports = {
     Content.findOne({'_id': content._id}, function(err, content_obj) {
       content_obj.addUpVote(user, function (err, content) {
         cb(err, content);
-
       });
     });
   },
 
   /* Get view givevn Content obj */
-  getViews : function(content, cb) {
-    content.getViews(function (views) {
-      cb(null, views);
+  getViews : function(json, cb) {
+    Content.toModel(JSON.parse(json), function (content) {
+      cb(null, content.getViews());
     });
   },
 
   /* Add a view to a Content obj */
-  addView : function(content, cb) {
-    content.addView(function (err, views) {
-      cb(err, views);
+  addView : function(json, cb) {
+    Content.toModel(JSON.parse(json), function (content) {
+      content.addView(function (err, views) {
+        cb(err, views);
+      });
     });
   }
 

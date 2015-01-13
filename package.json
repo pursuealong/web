@@ -18,6 +18,7 @@
     "connect-redis": "*",
     "redis": "*",
     "mongoose": "*",
+    "mongoose-gen": "*",
     "morgan": "*",
     "ejs": "*",
     "cookie-parser": "*", 

@@ -102,8 +102,7 @@ module.exports = function(passport) {
     clientID : configAuth.facebookAuth.clientID,
     clientSecret : configAuth.facebookAuth.clientSecret,
     callbackURL : configAuth.facebookAuth.callbackURL,
-    passReqToCallback : true, // allows us to pass in the req from our route (lets us check if a user is logged in or not)
-    profileFields : ['user_friends', 'user_activities', 'user_events', 'user_groups', 'user_interests', 'user_likes']
+    passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
     },
     function(req, token, refreshToken, profile, done) {
       // asynchronous
@@ -117,12 +116,13 @@ module.exports = function(passport) {
             // if there is a user id already but no token (user was linked at one point and then removed)
             if (!user.facebook.token) {
               user.facebook.token = token;
+              user.facebook.id = profile.id;
               user.facebook.first_name  = profile.name.givenName;
               user.facebook.last_name = profile.name.familyName;
               user.facebook.email = profile.emails[0].value;
               user.facebook.gender = profile.gender;
               user.facebook.username = req.body.username;
-              //user.facebook.interests = profile.user_interests;
+              user.facebook.interests = new Array; // TODO: pull out user interests
               user.save(function(err) {
               if (err)
                 throw err;
@@ -134,12 +134,13 @@ module.exports = function(passport) {
             // if there is no user, create them
             var newUser = new User();
             newUser.facebook.token = token;
+            newUser.facebook.id = profile.id;
             newUser.facebook.first_name  = profile.name.givenName;
             newUser.facebook.last_name = profile.name.familyName;
             newUser.facebook.email = profile.emails[0].value;
             newUser.facebook.gender = profile.gender;
             newUser.facebook.username = req.body.username;
-            //newUser.facebook.interests = profile.user_interests;
+            newUser.facebook.interests = new Array; // TODO: pull out user interests
             newUser.save(function(err) {
               if (err)
                 throw err;
@@ -151,12 +152,13 @@ module.exports = function(passport) {
           // user already exists and is logged in, we have to link accounts
           var user = req.user;
           user.facebook.token = token;
+          user.facebook.id = profile.id;
           user.facebook.first_name  = profile.name.givenName;
           user.facebook.last_name = profile.name.familyName;
           user.facebook.email = profile.emails[0].value;
           user.facebook.gender = profile.gender;
           user.facebook.username = req.body.username;
-          //user.facebook.interests = profile.user_interests;
+          user.facebook.interests = new Array; // TODO: pull out user interests
           user.save(function(err) {
             if (err)
               throw err;
