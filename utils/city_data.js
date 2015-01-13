@@ -5,8 +5,8 @@ var _ = require('underscore');
 
 module.exports = {
   /* Gets all the groups in the given city */
-  getCity: function(cid, cb) {
-    City.findOne({'_id': cid}, function (err, city) {
+  getCity: function(cityname, cb) {
+    City.findOne({'cityname': cityname}, function (err, city) {
       cb(city);
     });
   },

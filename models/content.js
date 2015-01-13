@@ -6,6 +6,8 @@ var _ = require('underscore');
 var generator = require('mongoose-gen');
 var util = require('../utils/user_data');
 var User = require('../models/user');
+var Group = require('../models/group');
+var City = require('../models/city');
 
 //TODO: JS Number is 53 bit decimal, 11 bit floating point.
 // Maybe we should consider using full 64 bit integer scheme.
@@ -60,7 +62,20 @@ schema.methods.addUpVote = function(user, cb) {
   self.save(function(err) {
     cb(err, self);
   });
-  // TODO: Increment the upvote count for group as well.
+  // TODO: Increment the upvote count for group and city as well.
+  /**
+  Group.findOne({"_id" : self.tag}, function(err, group) {
+    group.addUpvote(user, function(err, group_complete) {
+      console.log("group upvote done");
+    });
+  });
+  City.findOne({"cityname" : self.city}, function(err, city) {
+    city.addUpvote(user, function(err, city_complete) {
+      if (err) console.log("city upvote for: " + city + user + "unsuccessful");
+      else console.log("city upvote done");
+    });
+  });
+  */
 };
 
 schema.methods.getUpVotes = function() {
@@ -83,7 +98,7 @@ schema.methods.addComment = function(uid, text, cb) {
   var self = this;
   var newComment = new Comment();
   self.comments.push(newComment._id);
-  newComment.upvotes = 0;
+  newComment.upvotes = [];
   newComment.text = text;
   newComment.author = uid;
   process.nextTick(function() {

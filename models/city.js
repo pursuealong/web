@@ -13,8 +13,13 @@ var schema = mongoose.Schema({
   upvote        : [String]
 });
 
-schema.methods.addUpvote = function() {
+schema.methods.addUpvote = function(user, cb) {
   // TODO: Implement this function later 
+  var self = this;
+  if (!(user._id in self.upvote)) self.upvote.push(user._id);
+  self.save(function(err) {
+    cb(err, self);
+  });
 }
 
 schema.methods.addGroup = function(gid) {

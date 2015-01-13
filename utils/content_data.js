@@ -67,6 +67,7 @@ module.exports = {
       content.upvote = new Array();
       content.comments = new Array();
       content.views = new Number();
+      content.pid = content._id;
       content.priority = new Number();
       async.parallel(fns, function() {
         content.save(function(err) {

@@ -12,15 +12,20 @@ var schema = mongoose.Schema({
   priority   : Number,
   members    : [String], // [uid0, uid1, ...]
   upvote     : [String],
-  posts      : [String] // [pid0, pid1, ...]
+  posts      : [String], // [pid0, pid1, ...]
+  city       : String
 });
 
 schema.methods.getTag = function() {
   return this.tag;
 }
 
-schema.methods.addUpvote = function() {
-  //TODO: Implement this function later
+schema.methods.addUpvote = function(user, cb) {
+  var self = this;
+  if (!(user._id in self.upvote)) self.upvote.push(user._id);
+  self.save(function(err) {
+    cb(err, self);
+  });
 }
 
 schema.methods.addPost = function(pid) {
