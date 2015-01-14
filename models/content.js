@@ -54,6 +54,7 @@ schema.methods.addUpVote = function(user, cb) {
   if (!user_obj.upvotes_post[self._id]) {
     self.upvote.push(user._id);
     user_obj.upvotes_post[self._id] = 1;
+    user.markModified('local');
   } else {
     // TODO: Figure out what to do in this case
     console.log("User has already upvoted");
