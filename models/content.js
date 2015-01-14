@@ -3,17 +3,14 @@
 var mongoose = require('mongoose');
 var User = require('./user');
 var _ = require('underscore');
-var generator = require('mongoose-gen');
 var util = require('../utils/user_data');
-var User = require('../models/user');
-var Group = require('../models/group');
-var City = require('../models/city');
+var Group = require('./group');
+var City = require('./city');
 
 //TODO: JS Number is 53 bit decimal, 11 bit floating point.
 // Maybe we should consider using full 64 bit integer scheme.
 var schema = mongoose.Schema({
 
-  pid       : String,
   content   : Object,
   tag       : String,
   author    : String, /* uid of the content creator */
@@ -25,15 +22,6 @@ var schema = mongoose.Schema({
   priority  : Number
 
 });
-
-schema.methods.toModel = function(json, cb) {
-  try {
-    var content = generator.schema('Content', json);
-    cb(content);
-  } catch(err) {
-    throw err;
-  }
-};
 
 schema.methods.getTag = function() {
   return this.tag;
@@ -49,17 +37,19 @@ schema.methods.getTimeStamp = function() {
 
 schema.methods.addUpVote = function(user, cb) {
   var self = this;
-  user_obj = user.getUser();
-  if (!user_obj.upvotes_post) user_obj.upvotes_post = {};
-  if (!user_obj.upvotes_post[self._id]) {
-    self.upvote.push(user._id);
-    user_obj.upvotes_post[self._id] = 1;
-    user.markModified('local');
-  } else {
-    // TODO: Figure out what to do in this case
-    console.log("User has already upvoted");
-  }
-  user.save();
+  User.findOne({'_id': user._id}, function(err, user_obj) {
+    var user_obj = user_obj.getUser();
+    if (!user_obj.upvotes_post) user_obj.upvotes_post = {};
+    if (!user_obj.upvotes_post[self._id]) {
+      self.upvote.push(user._id);
+      user_obj.upvotes_post[self._id] = 1;
+      user_obj.markModified('local');
+    } else {
+      // TODO: Figure out what to do in this case
+      console.log("User has already upvoted");
+    }
+    user_obj.save();
+  });
   self.save(function(err) {
     cb(err, self);
   });
@@ -87,7 +77,7 @@ schema.methods.addView = function(cb) {
   var self = this;
   self.views++;
   self.save(function(err) {
-    cb(err, self.views);
+    cb(err, self);
   });
 };
 
@@ -102,6 +92,7 @@ schema.methods.addComment = function(uid, text, cb) {
   newComment.upvotes = [];
   newComment.text = text;
   newComment.author = uid;
+  self.markModified('comments');
   process.nextTick(function() {
     self.save();
   });
@@ -115,13 +106,13 @@ schema.methods.addComment = function(uid, text, cb) {
    username if user is not friend with
    author of the content. */
 schema.methods.setMask = function(user, cb) {
-  var User = user.getUser();
+  var user_obj = user.getUser();
   var uid = this.author;
   var comments = this.comments;
   var len = comments.length;
   var self = this;
   // need to check both author and comments
-  if (!_.contains(User.friends, uid) && user._id != uid) {
+  if (!_.contains(user_obj.friends, uid) && user._id != uid) {
     util.getUsername(uid, function (username) {
       self.author = username;
       cb();

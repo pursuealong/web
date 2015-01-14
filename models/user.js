@@ -2,7 +2,6 @@
 
 var mongoose = require('mongoose');
 var crypto = require('crypto');
-var generator = require('mongoose-gen');
 var bcrypt   = require('bcrypt-nodejs');
 
 //TODO: Add more on current schema
@@ -25,30 +24,9 @@ var schema = mongoose.Schema({
 
   facebook   : {
     id            : String, /* only for facebook account users */
-    online        : Boolean,
-    token         : String,
-    email         : String,
-    gender        : String,
-    first_name    : String,
-    last_name     : String,
-    username      : String,
-    profile_photo : String,
-    interests     : [String],
-    friends       : [String],
-    upvotes_post  : Object, /* { pid1, pid2, ... } */
-    upvotes_cmts  : Object /* { cid1, cid2, ... } */
-
+    token         : String
   }
 });
-
-schema.methods.toModel = function(json, cb) {
-  try {
-    var user = generator.schema('User', json);
-    cb(user);
-  } catch(err) {
-    throw err;
-  }
-};
 
 schema.methods.getUser = function() {
   if (!this.local.token)

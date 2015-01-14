@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose');
 var _ = require('underscore');
-var Group = require('../models/group');
+var Group = require('./group');
 
 var schema = mongoose.Schema({
   cityname      : String,

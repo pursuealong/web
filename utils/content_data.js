@@ -80,10 +80,8 @@ module.exports = {
   /* Get upvotes given Content obj */
   getUpvotes : function(content, cb) {
     Content.findOne({'_id': content._id}, function(err, content_obj) {
-      content_obj.getUpVotes(function (upvotes) {
-        console.log(content_obj);
-        cb(null, upvotes);
-      });
+      console.log(content_obj);
+      cb(null, content_obj.getUpVotes());
     });
   },
 
@@ -96,18 +94,19 @@ module.exports = {
     });
   },
 
-  /* Get view givevn Content obj */
-  getViews : function(json, cb) {
-    Content.toModel(JSON.parse(json), function (content) {
-      cb(null, content.getViews());
+  /* Get view given Content obj */
+  getViews : function(content, cb) {
+    Content.findOne({'_id': content._id}, function(err, content_obj) {
+      console.log(content_obj);
+      cb(null, content_obj.getViews());
     });
   },
 
   /* Add a view to a Content obj */
-  addView : function(json, cb) {
-    Content.toModel(JSON.parse(json), function (content) {
-      content.addView(function (err, views) {
-        cb(err, views);
+  addView : function(content, cb) {
+    Content.findOne({'_id': content._id}, function(err, content_obj) {
+      content_obj.addView(function (err, content) {
+        cb(err, content);
       });
     });
   }

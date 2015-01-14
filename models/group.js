@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose');
 var _ = require('underscore');
-var Content = require('../models/content');
+var Content = require('./content');
 
 var schema = mongoose.Schema({
   gid        : String,
