@@ -11,67 +11,58 @@
 </head>
 <body ng-app="home">
   <% if (!user) {%> <!-- DEBUG -->
-  <div class="container">
-    <div class="page-header">
-      <h1 class="text-success"><span class="glyphicon glyphicon-lock"></span> PursueAlong</h1>
-    </div>
-    <div class="container" align=right>
-
+  <div id = "container">
+    <div class="collapse navbar-collapse" id="top_bar">
+      <!--put stuff -->
       <!-- LOGIN FORM -->
       <form action="/login" method="post">
-        <div class="form-group" style="float:right">
-          <label>&nbsp;&nbsp;&nbsp;&nbsp;Password</label>
-          <input type="password" class="form-control" name="password" placeholder="password">
+        <div class="form-group">
+          <input type="text" class="" name="email" placeholder="email or username">
         </div>
         <div class="form-group">
-          <label>Email</label>
-          <input type="text" class="form-control" name="email" placeholder="email or user name">
+          <input type="password" class="" name="password" placeholder="password">
+        </div> 
+        <button type="submit" class="btn btn-danger btn-lg" >Login</button>
+        <a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span>Login with Facebook</a>
+      </form> <!-- End of LOGIN FORM -->
+    </div> <!-- end of top_bar -->
+    <div class="col-md-2" id="tool_bar">
+      <!-- put stuff -->
+    </div>
+    <div class="col-md-10" id="content_bar">
+      <h1 class="text-info"><span class="fa fa-sign-in"></span> Signup</h1>
+      <!-- Sign Up FORM -->
+      <form action="/register" method="post">
+        <div class="form-group">
+          <input type="text" class="" name="email" placeholder="email">
         </div>
-        <button type="submit" class="btn btn-danger btn-lg" style="float:right">Login</button>
-        <a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span>Facebook</a>&nbsp;&nbsp;&nbsp;&nbsp;
-      </form>
-    </div>
-    <hr>
-    <div class="container" align=right style="margin-top: 50px;">
-      <div class="col-sm-6 col-sm-offset-3">
-        <h1 class="text-info"><span class="fa fa-sign-in"></span> Signup</h1>
-        <!-- Sign Up FORM -->
-        <form action="/register" method="post">
-          <div class="form-group">
-            <label>Email</label>
-            <input type="text" class="form-control" name="email" placeholder="email or user name">
-          </div>
-          <div class="form-group">
-            <label>Password</label>
-            <input type="password" class="form-control" name="password" placeholder="password">
-          </div>
-          <div class="form-group">
-            <label>First Name</label>
-            <input type="text" class="form-control" name="first_name" placeholder="first_name">
-          </div>
-          <div class="form-group">
-            <label>Last Name</label>
-            <input type="text" class="form-control" name="last_name" placeholder="last_name">
-          </div>
-          <div class="form-group">
-            <label>Username</label>
-            <input type="text" class="form-control" name="username" placeholder="username">
-          </div>
-          <div class="form-group">
-            <label>Gender&nbsp;</label>
-            Male <input type="Radio" Name="gender" Value="Male"> 
-            Female<input type="Radio" Name="gender" Value="Female">
-          </div>
-          <div class="form-group">
-            <label>Interests</label>
-            <input type="text" class="form-control" name="interests" placeholder="interests">
-          </div>
+        <div class="form-group">
+          <input type="password" class="" name="password" placeholder="password">
+        </div>
+        <div class="form-group">
+          <input type="text" class="" name="first_name" placeholder="first_name">
+        </div>
+        <div class="form-group">
+          <input type="text" class="" name="last_name" placeholder="last_name">
+        </div>
+        <div class="form-group">
+          <input type="text" class="" name="username" placeholder="username">
+        </div>
+        <div class="form-group">
+          <label>Gender&nbsp;</label>
+          Male <input type="Radio" Name="gender" Value="Male"> 
+          Female<input type="Radio" Name="gender" Value="Female">
+        </div>
+        <div class="form-group">
+          <label>Interests</label>
+          <input type="text" class="" name="interests" placeholder="interests">
+        </div>
 
-          <button type="submit" class="btn btn-danger btn-lg">Signup</button>
-        </form>
-      </div>
+        <button type="submit" class="btn btn-danger btn-lg">Signup</button>
+      </form>
+      <!-- End of Sign Up FORM -->
     </div>
-  </div>
+  </div>  
   <% } else { %>
   <!--
   put user specified newsfeed/page here.

@@ -24,7 +24,11 @@ var schema = mongoose.Schema({
 
   facebook   : {
     id            : String, /* only for facebook account users */
-    token         : String
+    online        : Boolean,
+    token         : String,
+    profile_photo : String,
+    interests     : [String],
+    friends       : [String],
   }
 });
 

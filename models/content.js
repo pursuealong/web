@@ -11,6 +11,7 @@ var City = require('./city');
 // Maybe we should consider using full 64 bit integer scheme.
 var schema = mongoose.Schema({
 
+  pid       : String,
   content   : Object,
   tag       : String,
   author    : String, /* uid of the content creator */
@@ -37,19 +38,17 @@ schema.methods.getTimeStamp = function() {
 
 schema.methods.addUpVote = function(user, cb) {
   var self = this;
-  User.findOne({'_id': user._id}, function(err, user_obj) {
-    var user_obj = user_obj.getUser();
-    if (!user_obj.upvotes_post) user_obj.upvotes_post = {};
-    if (!user_obj.upvotes_post[self._id]) {
-      self.upvote.push(user._id);
-      user_obj.upvotes_post[self._id] = 1;
-      user_obj.markModified('local');
-    } else {
-      // TODO: Figure out what to do in this case
-      console.log("User has already upvoted");
-    }
-    user_obj.save();
-  });
+  user_obj = user.getUser();
+  if (!user_obj.upvotes_post) user_obj.upvotes_post = {};
+  if (!user_obj.upvotes_post[self._id]) {
+    self.upvote.push(user._id);
+    user_obj.upvotes_post[self._id] = 1;
+    user.markModified('local');
+  } else {
+    // TODO: Figure out what to do in this case
+    console.log("User has already upvoted");
+  }
+  user.save();
   self.save(function(err) {
     cb(err, self);
   });
@@ -77,7 +76,7 @@ schema.methods.addView = function(cb) {
   var self = this;
   self.views++;
   self.save(function(err) {
-    cb(err, self);
+    cb(err, self.views);
   });
 };
 
