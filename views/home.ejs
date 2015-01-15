@@ -94,6 +94,9 @@
     <div class="col-md-2" id="tool_bar">
       <label> Groups: </label>
       <div class="group_div">
+        <div id = "group_button">
+          <a href = "/"> General </a>
+        </div>
         <div id = "group_button" ng-repeat= "group in groups">
           <a ng-href = "/groups/{{group.tag}}"> {{group.tag}} </a>
         </div>

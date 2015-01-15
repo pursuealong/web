@@ -43,6 +43,9 @@
     <div class="col-md-2" id="tool_bar">
       <label> Groups: </label>
       <div class="group_div">
+        <div id = "group_button">
+          <a href = "/"> General </a>
+        </div>
         <div id = "group_button" ng-repeat= "group in groups">
           <a ng-href = "../groups/{{group.tag}}"> {{group.tag}} </a>
         </div>
@@ -50,10 +53,11 @@
         <button type = "button" ng-click="postGroup()"> Add Group</button>
       </div>
     </div>
-    <div class="col-md-10" id="content_bar">
-      <input type = "text" id = "post_query" ng-model="postVal">
-      <button type = "button" ng-click="postContent()"> Post </button>
+    <div class="col-md-10" id="content_bar"> 
       <div id = "newsfeed">
+        <h1> {{content[0].tag}} </h1>
+        <input type = "text" id = "post_query" ng-model="postVal">
+        <button type = "button" ng-click="postContent()"> Post </button>
         <div id = "post" ng-repeat= "elem in content | limitTo: 20 track by $index">
           {{elem.content}} by {{elem.author}} from {{elem.city}}
           <br>
