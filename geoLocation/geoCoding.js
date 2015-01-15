@@ -18,21 +18,20 @@ module.exports = {
 function getCityName(body) {
   var arrAddress = body.results[0].address_components;
   var len = arrAddress.length;
-  var city_name = '';
+  var city_name_l = '';
+  var city_name_p = '';
 
   // TODO: optimization perhaps?
-  (function() {
-    for (var i = 0; i < len; i++) {
-      if (_.contains(arrAddress[i].types, 'locality'))
-        city_name = arrAddress[i].long_name;
-        break;
-      if (_.contains(arrAddress[i].types, 'political'))
-        city_name = arrAddress[i].long_name;
-        break;
+  _.each(arrAddress, function(addr) {
+    if (_.contains(addr.types, 'political')) {
+      city_name_p = addr.long_name;
     }
-  })();
+    if (_.contains(addr.types, 'locality')) {
+      city_name_l = addr.long_name;
+    }
+  });
 
-  return city_name;
+  return city_name_l || city_name_p;
 
 }
 
