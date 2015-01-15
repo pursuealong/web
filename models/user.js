@@ -26,7 +26,7 @@ var schema = mongoose.Schema({
     id            : String, /* only for facebook account users */
     online        : Boolean,
     token         : String,
-    profile_photo : String,
+    profile_photo : String, /* save url to facebook profile pic */
     interests     : [String],
     friends       : [String],
   }

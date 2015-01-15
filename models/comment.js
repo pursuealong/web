@@ -2,7 +2,6 @@
 
 var mongoose = require('mongoose');
 var User = require('./user');
-var generator = require('mongoose-gen');
 
 var schema = mongoose.Schema({
 
@@ -16,15 +15,15 @@ schema.methods.addUpVote = function(user, cb) {
   // TODO: Implement this function later.
   var self = this;
   user_obj = user.getUser();
-  if (!user_obj.upvotes_post) user_obj.upvotes_post = {};
-  if (!user_obj.upvotes_post[self._id]) {
+  if (!user_obj.upvotes_cmts) user_obj.upvotes_cmts = {};
+  if (!user_obj.upvotes_cmts[self._id]) {
     self.upvote.push(user._id);
-    user_obj.upvotes_post[self._id] = 1;
+    user_obj.upvotes_cmts[self._id] = 1;
+    user.markModified('local');
   } else {
     // TODO: Figure out what to do...
     console.log("User has already upvoted");
   }
-  user.getUser().upvotes_cmts.push(self._id);
   user.save();
   self.save(function(err) {
     cb(err, self.upvote);

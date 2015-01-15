@@ -105,6 +105,8 @@ module.exports = function(passport) {
     passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
     },
     function(req, token, refreshToken, profile, done) {
+      var url = "https://graph.facebook.com/" + profile.id + "/picture" + "?width=200&height=200" + "&access_token=" + token;
+      console.log(url);
       // asynchronous
       process.nextTick(function() {
         // check if the user is already logged in
@@ -117,6 +119,7 @@ module.exports = function(passport) {
             if (!user.facebook.token) {
               user.facebook.token = token;
               user.facebook.id = profile.id;
+              user.facebook.profile_photo = url;
               user.local.first_name  = profile.name.givenName;
               user.local.last_name = profile.name.familyName;
               user.local.email = profile.emails[0].value;
@@ -135,6 +138,7 @@ module.exports = function(passport) {
             var newUser = new User();
             newUser.facebook.token = token;
             newUser.facebook.id = profile.id;
+            newUser.facebook.profile_photo = url;
             newUser.local.first_name  = profile.name.givenName;
             newUser.local.last_name = profile.name.familyName;
             newUser.local.email = profile.emails[0].value;
@@ -153,6 +157,7 @@ module.exports = function(passport) {
           var user = req.user;
           user.facebook.token = token;
           user.facebook.id = profile.id;
+          user.facebook.profile_photo = url;
           user.local.first_name  = profile.name.givenName;
           user.local.last_name = profile.name.familyName;
           user.local.email = profile.emails[0].value;

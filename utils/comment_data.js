@@ -15,31 +15,31 @@ module.exports = {
   },
 
   /* return a Comment obj given cid */
-  getCommentById : function(cid, cb) {
-    Comment.findOne({ '_id':  cid }, function (err, comment) {
+  getCommentById : function(comment, cb) {
+    Comment.findOne({ '_id':  comment._id }, function (err, comment) {
       cb(err, comment);
     });
   },
 
   /* Add a comment given Content obj */
-  addComment : function(json, uid, text, cb) {
-    Content.toModel(JSON.parse(json), function (content) {
-      content.addComment(uid, text, function (err, comment) {
+  addComment : function(content, uid, text, cb) {
+    Content.findOne({'_id': content._id}, function(err, content_obj) {
+      content_obj.addComment(uid, text, function (err, comment) {
         cb(err, comment);
       });
     });
   },
 
   /* Get upvotes given Comment obj */
-  getUpvotes : function(json, cb) {
-    Comment.toModel(JSON.parse(json), function (comment) {
+  getUpvotes : function(comment, cb) {
+    Comment.findOne({ '_id':  comment._id }, function (err, comment) {
       cb(null, comment.getUpVotes());
     });
   },
 
   /* Add aa upvote to a Comment obj */
-  addUpvote : function(json, user, cb) {
-    Comment.toModel(JSON.parse(json), function (comment) {
+  addUpvote : function(comment, user, cb) {
+    Comment.findOne({ '_id':  comment._id }, function (err, comment) {
       comment.addUpVote(user, function (err, upvotes) {
         cb(err, upvotes);
       });
