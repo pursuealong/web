@@ -1,6 +1,7 @@
 var home = angular.module("home", []);
 
-home.controller("main", function($scope, $http) {
+home.controller("main", function($scope, $http, $location) {
+
   var lat = null;
   var lng = null;
   function doGet(query) {
@@ -8,8 +9,14 @@ home.controller("main", function($scope, $http) {
       alert("GPS Failed!");
       return;
     }
-    console.log(lat + " , " + lng);
-    var resp = $http.get(query + "/" + lat + "/" + lng);
+    if (query == "groups") {
+      var url = '../' + query + "/" + lat + "/" + lng;
+    } else {
+      var url_tmp = $location.$$absUrl.split("/");
+      var tag = url_tmp[url_tmp.length - 1];
+      var url = '../' + query + "/" + tag  + "/" + lat + "/" + lng;
+    }
+    var resp = $http.get(url);
     resp.success(function(data, status, headers, config) {
       if (query == 'groups') $scope.groups = data;
       else $scope.content = data;
@@ -21,12 +28,15 @@ home.controller("main", function($scope, $http) {
   $scope.postContent = function() {
     var content = $scope.postVal;
     $scope.postVal = "";
+    var url_tmp = $location.$$absUrl.split("/");
+    var tag = url_tmp[url_tmp.length - 1];
     var body = {
       content: content,
       lat: lat,
-      lng: lng
+      lng: lng,
+      tag: tag
     };
-    var resp = $http.post("/posts", body);
+    var resp = $http.post('../' + "posts", body);
     resp.success(function(data, status, headers, config) {
       data.author = "me";
       if ($scope.content) {
@@ -47,7 +57,7 @@ home.controller("main", function($scope, $http) {
       tag: tag
     };
 
-    var resp = $http.post("groups", body);
+    var resp = $http.post('../' + "groups", body);
     resp.success(function(data, status, headers, config) {
       if ($scope.groups) {
         $scope.groups.push(data);
@@ -63,7 +73,7 @@ home.controller("main", function($scope, $http) {
   $scope.doUpvote = function(content) {
     var resp = $http({
       method: "POST",
-      url: "/upvote/" + content._id,
+      url: '../' + "/upvote/" + content._id,
       data: {content: content}
     });
     resp.success(function(data, status, headers, config) {
@@ -98,4 +108,3 @@ home.controller("main", function($scope, $http) {
   };
   
 });
-

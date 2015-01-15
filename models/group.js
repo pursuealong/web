@@ -47,4 +47,8 @@ schema.methods.getPost = function(pid, cb) {
     cb(post);
   });
 }
+
+schema.methods.getCity = function() {
+  return this.city;
+}
 module.exports = mongoose.model("Group", schema);

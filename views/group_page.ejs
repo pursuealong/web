@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+  <title>PursueAlong</title>
+  <script src="../bower_components/angular/angular.js"></script>
+  <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../js/group_controller.js"></script>
+  <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/home.css">
+</head>
+<body ng-app="home">
+  <% if (!user) {%> <!-- DEBUG -->
+  <!-- Put Something here -->
+  <% } else { %>
+  <!--
+  put user specified newsfeed/page here.
+  -->
+  <div id = "container" ng-controller="main" ng-init="init()">
+    <div class="collapse navbar-collapse" id="top_bar">
+      <div id = "search_bar" class = "col-md-6">
+          <label> Search: </label>
+          <input type = "text" id = "query" ng-model="inputVal">
+          {{inputVal}}
+      </div> <!-- end of search_bar -->
+      <ul class="nav navbar-nav" id="top_bar_elem">
+        <li><a id = "home" href="../">Home</a></li>
+        <li><a id = "profile" href="../profile"><%= user.local.first_name %> <%= user.local.last_name %></a></li>
+        <li class="dropdown">
+          <a href="#" id = "account" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Account<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="../logout">Logout</a></li>
+            <li><a href="#">Create Group</a></li>
+            <li><a href="#"></a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header">Privacy Settings</li>
+            <li><a href="#">Separated link</a></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li>
+      </ul> <!-- end of top_bar_elem -->
+    </div> <!-- end of top_bar -->
+    <div class="col-md-2" id="tool_bar">
+      <label> Groups: </label>
+      <div class="group_div">
+        <div id = "group_button" ng-repeat= "group in groups">
+          <a ng-href = "../groups/{{group.tag}}"> {{group.tag}} </a>
+        </div>
+        <input type = "text" id = "addGroupButton" ng-model="groupInput">
+        <button type = "button" ng-click="postGroup()"> Add Group</button>
+      </div>
+    </div>
+    <div class="col-md-10" id="content_bar">
+      <input type = "text" id = "post_query" ng-model="postVal">
+      <button type = "button" ng-click="postContent()"> Post </button>
+      <div id = "newsfeed">
+        <div id = "post" ng-repeat= "elem in content | limitTo: 20 track by $index">
+          {{elem.content}} by {{elem.author}} from {{elem.city}}
+          <br>
+          <div id = "upvote">
+            Upvotes: {{elem.upvote.length}}
+            <button id={{elem._id}} ng-click="doUpvote(elem)"> upvote </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% } %>
+</body>
+</html>

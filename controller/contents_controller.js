@@ -1,6 +1,15 @@
-var utils = require('../utils/content_data');
+var utils_c = require('../utils/content_data');
+var utils_g = require('../utils/group_data');
 
 /** Endpoint API for Content **/
+
+function sendResp(res, content, err) {
+  try {
+    res.json(content);
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 module.exports = function(app, passport) {
 
@@ -10,35 +19,58 @@ module.exports = function(app, passport) {
   app.get('/posts/:lat/:lng', function(req, res) {
     var lat = req.params.lat;
     var lng = req.params.lng;
-    utils.getContent(lat, lng, req, function (err, content) { 
-      try {
-        res.json(content);
-      } catch (err) {
-        console.log(err);
-      }
+    if (req.body.tag) {
+      utils_g.getGroupContent(lat, lng, req, function(err, content) {
+        sendResp(res, content, err);
+      });
+    } else {
+      utils_c.getContent(lat, lng, req, function (err, content) { 
+      sendResp(res, content, err); 
+      });
+    }
+  });
+
+  app.get('/posts/:tag/:lat/:lng', function(req, res) {
+    var lat = req.params.lat;
+    var lng = req.params.lng;
+    var tag = req.params.tag;
+    utils_g.getGroupContent(lat, lng, req, function(err, content) {
+      sendResp(res, content, err);
     });
   });
 
   // post a new content
   app.post('/posts', function(req, res) {
-    utils.postContent(req, function (err, content) { 
-      try {
-        res.json(content);
-      } catch (err) {
-        console.log(err);
-      }
+    if (req.body.tag) {
+      utils_g.postGroupContent(req, function(err, content) {
+        sendResp(res, content, err); 
+      });
+    } else {
+      utils_c.postContent(req, function (err, content) { 
+        sendResp(res, content, err);
+      });
+    }
+  });
+
+  app.get('/groups/:lat/:lng', function(req, res) {
+    var lat = req.params.lat;
+    var lng = req.params.lng;
+    utils_g.getGroups(lat, lng, function(err, groups) {
+      sendResp(res, groups, err);
     });
   });
 
+  app.post('/groups', function(req, res) {
+    utils_g.postGroup(req, function(err, group) {
+      sendResp(res, group, err);
+    });
+  });
+  
   // get upvote given a content
   app.get('/upvote/:pid', function(req, res) {
     var content = req.body.content;
-    utils.getUpvotes(content, function (err, upvotes) {
-      try {
-        res.json(upvotes);
-      } catch (err) {
-        console.log(err);
-      }
+    utils_c.getUpvotes(content, function (err, upvotes) {
+      sendResp(res, upvote, err); 
     });
   });
 
@@ -46,31 +78,23 @@ module.exports = function(app, passport) {
   app.post('/upvote/:pid/', function(req, res) {
     var content = req.body.content;
     var user = req.user;
-    utils.addUpvote(content, user, function (err, content_changed) {
-      try {
-        res.json(content_changed);
-      } catch (err) {
-        console.log(err);
-      }
+    utils_c.addUpvote(content, user, function (err, content_changed) {
+      sendResp(res, content_changed, err); 
     });
   });
 
   // get views given a content
   app.get('/upvote/:pid', function(req, res) {
     var content = req.body.content;
-    utils.getViews(content, function (err, views) {
-      try {
-        res.json(views);
-      } catch (err) {
-        console.log(err);
-      }
+    utils_c.getViews(content, function (err, views) {
+      sendResp(res, views, err); 
     });
   });
 
   // increment views given a content
   app.post('/upvote/:pid/', function(req, res) {
     var content = req.body.content;
-    utils.addView(content, function (err, views) {
+    utils_c.addView(content, function (err, views) {
       try {
         res.json(views);
       } catch (err) {

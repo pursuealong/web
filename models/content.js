@@ -44,6 +44,27 @@ schema.methods.addUpVote = function(user, cb) {
     self.upvote.push(user._id);
     user_obj.upvotes_post[self._id] = 1;
     user.markModified('local');
+    
+    // TODO: Increment the upvote count for group and city as well.
+    Group.findOne({"tag" : self.tag}, function(err, group) {
+      if (!_.isNull(group)) {
+        group.addUpvote(user, function(err, group_complete) {
+          console.log("group upvote done");
+        });
+      } else {
+        console.log("No Groups found for: " + self);
+      }
+    });
+    City.findOne({"cityname" : self.city}, function(err, city) {
+        if (!_.isNull(city)) {
+          city.addUpvote(user, function(err, city_complete) {
+            if (err) console.log("city upvote for: " + city + user + "unsuccessful");
+            else console.log("city upvote done"); 
+          });
+        } else {
+          console.log("No city found for: " + self);
+        }
+    });
   } else {
     // TODO: Figure out what to do in this case
     console.log("User has already upvoted");
@@ -51,21 +72,7 @@ schema.methods.addUpVote = function(user, cb) {
   user.save();
   self.save(function(err) {
     cb(err, self);
-  });
-  // TODO: Increment the upvote count for group and city as well.
-  /**
-  Group.findOne({"_id" : self.tag}, function(err, group) {
-    group.addUpvote(user, function(err, group_complete) {
-      console.log("group upvote done");
-    });
-  });
-  City.findOne({"cityname" : self.city}, function(err, city) {
-    city.addUpvote(user, function(err, city_complete) {
-      if (err) console.log("city upvote for: " + city + user + "unsuccessful");
-      else console.log("city upvote done");
-    });
-  });
-  */
+  }); 
 };
 
 schema.methods.getUpVotes = function() {

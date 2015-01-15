@@ -5,4 +5,10 @@ module.exports = function(app, passport) {
       user: req.user
     });
   });
+
+  app.get('/groups/:group', function (req, res) {
+    res.render('group_page.ejs', {
+      user: req.user
+    });
+  });
 }
