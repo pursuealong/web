@@ -68,7 +68,7 @@
     </div>
   </div>  
   <% } else { %>
-  <!--
+ <!--
   put user specified newsfeed/page here.
   -->
   <div id = "container" ng-controller="main" ng-init="init()">
@@ -98,7 +98,14 @@
     <div class="col-md-2" id="tool_bar">
       <label> Groups: </label>
       <div class="group_div">
-        Startup
+        <div id = "group_button">
+          <a href = "/"> General </a>
+        </div>
+        <div id = "group_button" ng-repeat= "group in groups">
+          <a ng-href = "/groups/{{group.tag}}"> {{group.tag}} </a>
+        </div>
+        <input type = "text" id = "addGroupButton" ng-model="groupInput">
+        <button type = "button" ng-click="postGroup()"> Add Group</button>
       </div>
     </div>
     <div class="col-md-10" id="content_bar">
