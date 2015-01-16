@@ -47,7 +47,7 @@
           <a href = "/"> General </a>
         </div>
         <div id = "group_button" ng-repeat= "group in groups">
-          <a ng-href = "../groups/{{group.tag}}"> {{group.tag}} </a>
+          <a ng-href = "../groups/{{group._id}}"> {{group.tag}} </a>
         </div>
         <input type = "text" id = "addGroupButton" ng-model="groupInput">
         <button type = "button" ng-click="postGroup()"> Add Group</button>
