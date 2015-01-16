@@ -14,6 +14,8 @@
   <% if (!user) {%>
   <div id="top-bar" class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
+      <a class="navbar-header" href="/" id="header">
+      <h2 class='logo'>PursueAlong</h2></a>
       <div class="collapse navbar-collapse" id="bs-navbar-collapse">
         <form class="navbar-form navbar-nav navbar-right" id="login" action="/login" method="post">
           <div class="form-group">
@@ -23,15 +25,15 @@
             <input type="password" class="form-control" name="password" placeholder="password">
           </div>
           <button type="submit" class="btn btn-danger" >Login</button>
-          <a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span>Login with Facebook</a>
         </form>
       </div>
     </div>
   </div>
   <div id="dim_screen">
     <div class="container-fluid" id="signup">
-      <a class="header" href="/"><h2 class='logo'>PursueAlong</h2></a>
       <div class"container" id="center">
+        <a href="/auth/facebook" class="btn btn-primary btn-lg" style="width: 15.5em;display: table;
+    margin-top: 30px;margin-bottom: 30px;"><span class="fa fa-facebook"></span>Signup with Facebook</a>
         <!-- Sign Up FORM -->
         <form action="/register" method="post">
           <div class="form-group">
@@ -95,20 +97,13 @@
     </div> <!-- end of top_bar -->
     <div class="col-md-2" id="tool_bar">
       <label> Groups: </label>
-      <div class="group_div">
-        <div id = "group_button">
-          <a href = "/"> General </a>
-        </div>
-        <div id = "group_button" ng-repeat= "group in groups">
-          <a ng-href = "/groups/{{group.tag}}"> {{group.tag}} </a>
-        </div>
-        <input type = "text" id = "addGroupButton" ng-model="groupInput">
-        <button type = "button" ng-click="postGroup()"> Add Group</button> 
+      <div class="group_button">
+        Startup
       </div>
     </div>
     <div class="col-md-10" id="content_bar">
       <input type = "text" id = "post_query" ng-model="postVal">
-      <button type = "button" ng-click="postContent()"> Post </button>
+      <button type = "button" ng-click="doPost()"> Post </button>
       <div id = "newsfeed">
         <div id = "post" ng-repeat= "elem in content | limitTo: 20 track by $index">
           {{elem.content}} by {{elem.author}} from {{elem.city}}

@@ -60,17 +60,11 @@
   color: white;
 }
 
-.header {
+#header {
   text-decoration: none !important;
-  text-align: center;
-  display: block;
   font-size: 30px;
   color: white;
-  margin-bottom: 30px;
-}
-
-.header:hover {
-  color: white;
+  margin-left: 15px !important;
 }
 
 #dim_screen {
