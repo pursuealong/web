@@ -78,8 +78,8 @@ module.exports = {
   },
 
   /* Get upvotes given Content obj */
-  getUpvotes : function(content, cb) {
-    Content.findOne({'_id': content._id}, function(err, content_obj) {
+  getUpvotes : function(id, cb) {
+    Content.findOne({'_id': id}, function(err, content_obj) {
       cb(null, content_obj.getUpVotes());
     });
   },
@@ -94,8 +94,8 @@ module.exports = {
   },
 
   /* Get view givevn Content obj */
-  getViews : function(content, cb) {
-    Content.findOne({'_id': content._id}, function(err, content_obj) {
+  getViews : function(id, cb) {
+    Content.findOne({'_id': id}, function(err, content_obj) {
       cb(null, content_obj.getViews());
     });
   },

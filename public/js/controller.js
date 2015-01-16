@@ -63,7 +63,7 @@ home.controller("main", function($scope, $http) {
   $scope.doUpvote = function(content) {
     var resp = $http({
       method: "POST",
-      url: "/upvote/" + content._id,
+      url: "/upvote",
       data: {content: content}
     });
     resp.success(function(data, status, headers, config) {

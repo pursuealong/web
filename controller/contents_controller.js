@@ -30,6 +30,7 @@ module.exports = function(app, passport) {
     }
   });
 
+  // get content given tag, lat, lng
   app.get('/posts/:tag/:lat/:lng', function(req, res) {
     var lat = req.params.lat;
     var lng = req.params.lng;
@@ -68,14 +69,13 @@ module.exports = function(app, passport) {
   
   // get upvote given a content
   app.get('/upvote/:pid', function(req, res) {
-    var content = req.body.content;
-    utils_c.getUpvotes(content, function (err, upvotes) {
+    utils_c.getUpvotes(req.params.pid, function (err, upvotes) {
       sendResp(res, upvote, err); 
     });
   });
 
   // increment upvote given a content
-  app.post('/upvote/:pid/', function(req, res) {
+  app.post('/upvote', function(req, res) {
     var content = req.body.content;
     var user = req.user;
     utils_c.addUpvote(content, user, function (err, content_changed) {
@@ -84,15 +84,14 @@ module.exports = function(app, passport) {
   });
 
   // get views given a content
-  app.get('/upvote/:pid', function(req, res) {
-    var content = req.body.content;
-    utils_c.getViews(content, function (err, views) {
+  app.get('/views/:pid', function(req, res) {
+    utils_c.getViews(req.params.pid, function (err, views) {
       sendResp(res, views, err); 
     });
   });
 
   // increment views given a content
-  app.post('/upvote/:pid/', function(req, res) {
+  app.post('/views', function(req, res) {
     var content = req.body.content;
     utils_c.addView(content, function (err, views) {
       try {
