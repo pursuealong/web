@@ -30,9 +30,8 @@
   </div>
   <div id="dim_screen">
     <div class="container-fluid" id="signup">
+      <a class="header" href="/"><h2 class='logo'>PursueAlong</h2></a>
       <div class"container" id="center">
-        <a class="header" href="/">
-        <h2 class='logo'>PursueAlong</h2></a>
         <!-- Sign Up FORM -->
         <form action="/register" method="post">
           <div class="form-group">
@@ -96,13 +95,20 @@
     </div> <!-- end of top_bar -->
     <div class="col-md-2" id="tool_bar">
       <label> Groups: </label>
-      <div class="group_button">
-        Startup
+      <div class="group_div">
+        <div id = "group_button">
+          <a href = "/"> General </a>
+        </div>
+        <div id = "group_button" ng-repeat= "group in groups">
+          <a ng-href = "/groups/{{group.tag}}"> {{group.tag}} </a>
+        </div>
+        <input type = "text" id = "addGroupButton" ng-model="groupInput">
+        <button type = "button" ng-click="postGroup()"> Add Group</button> 
       </div>
     </div>
     <div class="col-md-10" id="content_bar">
       <input type = "text" id = "post_query" ng-model="postVal">
-      <button type = "button" ng-click="doPost()"> Post </button>
+      <button type = "button" ng-click="postContent()"> Post </button>
       <div id = "newsfeed">
         <div id = "post" ng-repeat= "elem in content | limitTo: 20 track by $index">
           {{elem.content}} by {{elem.author}} from {{elem.city}}
