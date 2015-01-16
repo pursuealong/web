@@ -6,12 +6,22 @@ var _ = require('underscore');
 var apiKey = fs.readFileSync(__dirname + '/apiKey').toString();
 
 module.exports = {
+
   doReverseGeo: function (lat, lng, cb) {
-    request("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng  + "&key=" + apiKey, function (err, res, body) {
-      cb(getCityName(JSON.parse(body)));
-    }); 
+    processCoord(lat, lng,cb);
   }
 
+}
+
+/* recursive helper function for doReverseGeo */
+function processCoord(lat, lng, cb) {
+  request("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng  + "&key=" + apiKey, function (err, res, body) {
+    if (err) {
+      processCoord(lat, lng, cb);
+    } else {
+      cb(getCityName(JSON.parse(body)));
+    }
+  });
 }
 
 /* returns name of the city from result */
