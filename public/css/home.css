@@ -12,10 +12,13 @@
   background-color: #E0E0E0;
 }
 
-#top_bar {
-  border-style: solid;
-  border-width: 1px;
+#top-bar {
+  height: 70px;
+  line-height: 55px;
+  position: relative;
   background-color: #A80000;
+  margin-bottom: 0;
+  border:0px;
 }
 
 #post {
@@ -47,8 +50,47 @@
   color: white;
 }
 
-#home {
+.header {
+  text-decoration: none !important;
+  text-align: center;
+  display: block;
+  font-size: 30px;
   color: white;
+  margin-bottom: 30px;
+}
+
+.header:hover {
+  color: white;
+}
+
+#dim_screen {
+  width: 100%;
+  height: 100%;
+  background-color: #A80000;
+  position: fixed;
+}
+
+#login {
+  margin-right: 5px;
+}
+
+#signup {
+  background-color: #A80000;
+  position: center;
+  margin: 0 auto;
+  margin-top: 50px;
+  width: 40em;
+  height: 40em;
+  border-style:solid;
+  border-width:1px;
+  border-radius: 15px;
+  border:2px solid white;
+}
+
+#center {
+  display: block;
+  margin: 0 auto;
+  width: 20em;
 }
 
 #account {

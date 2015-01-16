@@ -6,61 +6,64 @@
   <script type="text/javascript" src="./bower_components/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/controller.js"></script>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
   <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="./css/home.css">
 </head>
 <body ng-app="home">
-  <% if (!user) {%> <!-- DEBUG -->
-  <div id = "container">
-    <div class="collapse navbar-collapse" id="top_bar">
-      <!--put stuff -->
-      <!-- LOGIN FORM -->
-      <form action="/login" method="post">
-        <div class="form-group">
-          <input type="text" class="" name="email" placeholder="email or username">
-        </div>
-        <div class="form-group">
-          <input type="password" class="" name="password" placeholder="password">
-        </div> 
-        <button type="submit" class="btn btn-danger btn-lg" >Login</button>
-        <a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span>Login with Facebook</a>
-      </form> <!-- End of LOGIN FORM -->
-    </div> <!-- end of top_bar -->
-    <div class="col-md-2" id="tool_bar">
-      <!-- put stuff -->
+  <% if (!user) {%>
+  <div id="top-bar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="bs-navbar-collapse">
+        <form class="navbar-form navbar-nav navbar-right" id="login" action="/login" method="post">
+          <div class="form-group">
+            <input type="text" class="form-control" name="email" placeholder="email or username">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" name="password" placeholder="password">
+          </div>
+          <button type="submit" class="btn btn-danger" >Login</button>
+          <a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span>Login with Facebook</a>
+        </form>
+      </div>
     </div>
-    <div class="col-md-10" id="content_bar">
-      <h1 class="text-info"><span class="fa fa-sign-in"></span> Signup</h1>
-      <!-- Sign Up FORM -->
-      <form action="/register" method="post">
-        <div class="form-group">
-          <input type="text" class="" name="email" placeholder="email">
-        </div>
-        <div class="form-group">
-          <input type="password" class="" name="password" placeholder="password">
-        </div>
-        <div class="form-group">
-          <input type="text" class="" name="first_name" placeholder="first_name">
-        </div>
-        <div class="form-group">
-          <input type="text" class="" name="last_name" placeholder="last_name">
-        </div>
-        <div class="form-group">
-          <input type="text" class="" name="username" placeholder="username">
-        </div>
-        <div class="form-group">
-          <label>Gender&nbsp;</label>
-          Male <input type="Radio" Name="gender" Value="Male"> 
-          Female<input type="Radio" Name="gender" Value="Female">
-        </div>
-        <div class="form-group">
-          <label>Interests</label>
-          <input type="text" class="" name="interests" placeholder="interests">
-        </div>
-
-        <button type="submit" class="btn btn-danger btn-lg">Signup</button>
-      </form>
-      <!-- End of Sign Up FORM -->
+  </div>
+  <div id="dim_screen">
+    <div class="container-fluid" id="signup">
+      <div class"container" id="center">
+        <a class="header" href="/">
+        <h2 class='logo'>PursueAlong</h2></a>
+        <!-- Sign Up FORM -->
+        <form action="/register" method="post">
+          <div class="form-group">
+            <input type="text" class="form-control" name="email" placeholder="email">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" name="password" placeholder="password">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name="first_name" placeholder="first_name">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name="last_name" placeholder="last_name">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name="username" placeholder="username">
+          </div>
+          <div class="form-group" id="profile">
+            <label>Gender&nbsp;</label>
+            Male <input type="Radio" Name="gender" Value="Male"> 
+            Female<input type="Radio" Name="gender" Value="Female">
+          </div>
+          <div class="form-group" id="profile">
+            <label>Interests</label>
+            <input type="text" class="form-control" name="interests" placeholder="interests">
+          </div>
+          <button type="submit" class="btn btn-danger btn-lg" style="width: 15.5em;display: table;
+    margin: 0 auto;">Signup</button>
+        </form>
+        <!-- End of Sign Up FORM -->
+      </div>
     </div>
   </div>  
   <% } else { %>
@@ -93,20 +96,13 @@
     </div> <!-- end of top_bar -->
     <div class="col-md-2" id="tool_bar">
       <label> Groups: </label>
-      <div class="group_div">
-        <div id = "group_button">
-          <a href = "/"> General </a>
-        </div>
-        <div id = "group_button" ng-repeat= "group in groups">
-          <a ng-href = "/groups/{{group.tag}}"> {{group.tag}} </a>
-        </div>
-        <input type = "text" id = "addGroupButton" ng-model="groupInput">
-        <button type = "button" ng-click="postGroup()"> Add Group</button>
+      <div class="group_button">
+        Startup
       </div>
     </div>
     <div class="col-md-10" id="content_bar">
       <input type = "text" id = "post_query" ng-model="postVal">
-      <button type = "button" ng-click="postContent()"> Post </button>
+      <button type = "button" ng-click="doPost()"> Post </button>
       <div id = "newsfeed">
         <div id = "post" ng-repeat= "elem in content | limitTo: 20 track by $index">
           {{elem.content}} by {{elem.author}} from {{elem.city}}
