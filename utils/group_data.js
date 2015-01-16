@@ -82,7 +82,7 @@ module.exports = {
   },
   postGroupContent : function(req, cb) {
     var tag = req.body.tag;
-    Group.findOne({'tag' : tag}, function (err, group) {
+    Group.findOne({'_id' : tag}, function (err, group) {
       var content = new Content();
       content.pid = req.user._id;
       content.content = req.body.content;

@@ -8,7 +8,11 @@ var apiKey = fs.readFileSync(__dirname + '/apiKey').toString();
 module.exports = {
 
   doReverseGeo: function (lat, lng, cb) {
-    processCoord(lat, lng,cb);
+    try {
+      processCoord(lat, lng,cb);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
 }
@@ -26,6 +30,7 @@ function processCoord(lat, lng, cb) {
 
 /* returns name of the city from result */
 function getCityName(body) {
+  if (!body.results[0]) return "noGps";
   var arrAddress = body.results[0].address_components;
   var len = arrAddress.length;
   var city_name_l = '';
