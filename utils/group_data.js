@@ -14,16 +14,18 @@ module.exports = {
     });
   },
   getGroupContent: function(lat, lng, req, cb) {
-    Content.find({'tag' : req.params.tag}, function(err, contents) {
-      var fns = [];
-      _.each(contents, function(content) {
-        fns.push(function(done) {
-          content.setMask(req.user, done);
-        });
-      });
-      async.parallel(fns, function() {
-        cb(err, contents);
-      });
+    Group.findOne({'_id' : req.params.tag}, function (err, group) {
+			Content.find({'tag' : group.tag}, function(err, contents) {
+				var fns = [];
+				_.each(contents, function(content) {
+					fns.push(function(done) {
+						content.setMask(req.user, done);
+					});
+				});
+				async.parallel(fns, function() {
+					cb(err, contents);
+				});
+			});
     });
   },
   getGroups: function(lat, lng, cb) { 

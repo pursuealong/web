@@ -34,7 +34,6 @@ module.exports = function(app, passport) {
   app.get('/posts/:tag/:lat/:lng', function(req, res) {
     var lat = req.params.lat;
     var lng = req.params.lng;
-    var tag = req.params.tag;
     utils_g.getGroupContent(lat, lng, req, function(err, content) {
       sendResp(res, content, err);
     });
