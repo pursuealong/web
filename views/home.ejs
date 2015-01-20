@@ -113,8 +113,10 @@
       <button type = "button" ng-click="postContent()"> Post </button>
       <div id = "newsfeed">
         <div id = "post" ng-repeat= "elem in content | limitTo: 20 track by $index">
-          {{elem.content}} by {{elem.author}} from {{elem.city}}
-          <br>
+          {{elem.content}} by {{elem.author}} from {{elem.city}}  
+          <div id = "comments">
+            <a ng-href = "/posts/{{elem._id}}"> Comments ({{elem.comments.length}}) </a>
+          </div>
           <div id = "upvote">
             Upvotes: {{elem.upvote.length}}
             <button id={{elem._id}} ng-click="doUpvote(elem)"> upvote </button>

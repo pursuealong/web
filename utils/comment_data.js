@@ -6,11 +6,18 @@ var _ = require('underscore');
 module.exports = {
 
   /* set list of Comments given Content */
-  getComments : function(content, cb) {
-    Comment.find({
-      '_id': { $in: content.comments }
-    }, function (err, cmts) {
-      cb(err, cmts);
+  getComments : function(req, cb) {
+    var pid = req.params.pid;
+    Comment.find({'pid': pid}, function (err, cmts) {
+      var fns = [];
+      _.each(cmts, function(cmt) {
+        fns.push(function(done) {
+          cmt.setMask(req.user, done);
+        });
+      });
+      async.parallel(fns, function() {
+        cb(err, cmts);
+      });
     });
   },
 

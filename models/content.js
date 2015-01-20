@@ -5,13 +5,13 @@ var User = require('./user');
 var _ = require('underscore');
 var util = require('../utils/user_data');
 var Group = require('./group');
+var Comment = require('./comment');
 var City = require('./city');
 
 //TODO: JS Number is 53 bit decimal, 11 bit floating point.
 // Maybe we should consider using full 64 bit integer scheme.
 var schema = mongoose.Schema({
 
-  pid       : String,
   content   : Object,
   tag       : String,
   author    : String, /* uid of the content creator */
@@ -98,6 +98,7 @@ schema.methods.addComment = function(uid, text, cb) {
   newComment.upvotes = [];
   newComment.text = text;
   newComment.author = uid;
+  newComment.pid = self._id;
   self.markModified('comments');
   process.nextTick(function() {
     self.save();
@@ -129,16 +130,6 @@ schema.methods.setMask = function(user, cb) {
       cb();
     });
   }
-  // TODO: check for authors of comments
-  /*
-  (function() {
-    for (var i = 0; i < len; i++) {
-      if (!_.contains(User.friend, comments[i][0]))
-        comments[i][0] = util.getUsername(comments[i][0]);
-    }
-  })(); */
-
-  return this;
 };
 
 // create the model for contents and expose it to our app

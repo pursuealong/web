@@ -5,7 +5,6 @@ var _ = require('underscore');
 var Content = require('./content');
 
 var schema = mongoose.Schema({
-  gid        : String,
   tag        : String,
   author     : String,
   timestamp  : Number,

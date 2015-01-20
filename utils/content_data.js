@@ -1,8 +1,10 @@
-var Content = require('../models/content');
-var utils = require('../utils/comment_data');
-var geoCode = require('../geoLocation/geoCoding');
 var async = require('async');
 var _ = require('underscore');
+
+var Content = require('../models/content');
+var Comment = require('../models/comment');
+var utils = require('../utils/comment_data');
+var geoCode = require('../geoLocation/geoCoding');
 
 module.exports = {
 
@@ -23,12 +25,6 @@ module.exports = {
           content.setMask(req.user, done);
         });
       });
-      /* TODO: display handful of comments
-       _.each(contents, function(content) {
-        fns.push(function(done) {
-          utils.getComments(content, done);
-        });
-      });*/
       async.parallel(fns, function() {
         var content_out = [];
         _.each(contents, function(content) {
@@ -39,6 +35,9 @@ module.exports = {
         cb(err, content_out);
       });
     });
+  },
+  getPost: function(pid, cb) {
+    Content.findOne({'_id': pid}, cb);
   },
 
   /* post a new content */
@@ -85,12 +84,23 @@ module.exports = {
   },
 
   /* Add an upvote to a Content obj */
-  addUpvote : function(content, user, cb) {
-    Content.findOne({'_id': content._id}, function(err, content_obj) {
-      content_obj.addUpVote(user, function (err, content) {
-        cb(err, content);
+  addUpvote : function(req, cb) {
+    var user = req.user;
+    var comment = req.body.comment;
+    var content = req.body.content;
+    if (!_.isNull(comment)) {
+      Comment.findOne({'_id': comment._id}, function(err, comment_obj) {
+        comment_obj.addUpVote(user, function (err, cmt) {
+          cb(err, cmt);
+        });
       });
-    });
+    } else {
+      Content.findOne({'_id': content._id}, function(err, content_obj) {
+        content_obj.addUpVote(user, function (err, cnt) {
+          cb(err, cnt);
+        });
+      });
+    }
   },
 
   /* Get view givevn Content obj */

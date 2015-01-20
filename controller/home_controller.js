@@ -11,4 +11,9 @@ module.exports = function(app, passport) {
       user: req.user
     });
   });
+  app.get('/posts/:post', function (req, res) {
+    res.render('post_page.ejs', {
+      user: req.user
+    });
+  });
 }

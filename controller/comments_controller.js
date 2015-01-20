@@ -7,9 +7,8 @@ module.exports = function(app, passport) {
   /* TODO: include gid later (ex. /posts/:gid/:pid */
 
   // get comments from a content
-  app.get('/comments/:pid:/:cid', function(req, res) {
-    var content = req.body.content;
-    utils.getComments(content, function (err, comments) {
+  app.get('/comments/:pid', function(req, res) {
+    utils.getComments(req, function (err, comments) {
       try {
         res.json(comments);
       } catch (err) {
@@ -19,7 +18,7 @@ module.exports = function(app, passport) {
   });
 
   // post a comment on a content
-  app.post('/comments/:pid', function(req, res) {
+  app.post('/comments', function(req, res) {
     var content = req.body.content;
     var uid = req.user._id;
     var text = req.body.text;

@@ -38,6 +38,12 @@ module.exports = function(app, passport) {
       sendResp(res, content, err);
     });
   });
+  // get a single post using pid
+  app.get('/post/:pid', function(req, res) {
+    utils_c.getPost(req.params.pid, function(err, post) {
+      sendResp(res, post, err);
+    });
+  });
 
   // post a new content
   app.post('/posts', function(req, res) {
@@ -75,9 +81,7 @@ module.exports = function(app, passport) {
 
   // increment upvote given a content
   app.post('/upvote', function(req, res) {
-    var content = req.body.content;
-    var user = req.user;
-    utils_c.addUpvote(content, user, function (err, content_changed) {
+    utils_c.addUpvote(req, function (err, content_changed) {
       sendResp(res, content_changed, err); 
     });
   });
