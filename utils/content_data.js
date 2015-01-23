@@ -88,7 +88,7 @@ module.exports = {
     var user = req.user;
     var comment = req.body.comment;
     var content = req.body.content;
-    if (!_.isNull(comment)) {
+    if (comment) {
       Comment.findOne({'_id': comment._id}, function(err, comment_obj) {
         comment_obj.addUpVote(user, function (err, cmt) {
           cb(err, cmt);
